@@ -30,7 +30,7 @@ from .standards import (
 )
 
 
-# 固定参数
+# 默认参数。命令行参数会覆盖这些默认值。
 ROWS = 4
 COLS = 6
 CENTER_RATIO = 0.50
@@ -38,22 +38,29 @@ CENTER_RATIO = 0.50
 MODEL = "linear_bias"
 RIDGE_ALPHA = 1e-6
 
+CHART_SAMPLE_METHOD = "mean"
+CHART_TRIM_PERCENT = 10.0
+
 TRIM_PERCENT = 10.0
 VALIDATION_THRESHOLD = 5.0
 
 TARGET_SEQUENCE = "all"
 
 
+def _arg(args, name: str, default):
+    return getattr(args, name, default)
+
+
 # 目标胶块 ROI 获取
 
-def _get_target_specs(photo_bgr: np.ndarray) -> list[dict]:
+def _get_target_specs(photo_bgr: np.ndarray, target_sequence: str = TARGET_SEQUENCE) -> list[dict]:
     """
-    按内置标准顺序依次框选 12 个胶块。
+    按内置标准顺序依次框选胶块。
     默认顺序：
     W015 -> W016 -> W031 -> W032 -> W047 -> W048
     -> W063 -> W064 -> W079 -> W080 -> W095 -> W096
     """
-    labels = parse_standard_sequence(TARGET_SEQUENCE)
+    labels = parse_standard_sequence(target_sequence)
     specs: list[dict] = []
 
     print("\n批量验证顺序：")
@@ -95,6 +102,8 @@ def _process_one_target(
     photo_bgr: np.ndarray,
     corrected_photo_bgr: np.ndarray,
     out_dir: Path,
+    trim_percent: float,
+    validation_threshold: float,
 ) -> dict:
     """
     处理单个胶块：
@@ -123,14 +132,14 @@ def _process_one_target(
         photo_bgr,
         target_roi,
         mask=target_mask,
-        trim_percent=TRIM_PERCENT,
+        trim_percent=trim_percent,
     )
 
     target_after_rgb = get_glue_block_representative_rgb(
         corrected_photo_bgr,
         target_roi,
         mask=target_mask,
-        trim_percent=TRIM_PERCENT,
+        trim_percent=trim_percent,
     )
 
     target_before_lab = rgb_to_lab(target_before_rgb[None, :])[0]
@@ -184,7 +193,7 @@ def _process_one_target(
         },
         "roi_xyxy": list(map(int, target_roi)),
         "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
-        "trim_percent": TRIM_PERCENT,
+        "trim_percent": float(trim_percent),
         "valid_mask_pixels": int(np.sum(target_mask > 0)),
         "before_rgb": target_before_rgb.round(3).tolist(),
         "after_rgb": target_after_rgb.round(3).tolist(),
@@ -196,8 +205,8 @@ def _process_one_target(
             "after": after_de,
             "improvement": before_de - after_de,
         },
-        "validation_threshold": VALIDATION_THRESHOLD,
-        "pass_after_threshold": after_de <= VALIDATION_THRESHOLD,
+        "validation_threshold": float(validation_threshold),
+        "pass_after_threshold": after_de <= validation_threshold,
         "nearest_before": nearest_before,
         "nearest_after": nearest_after,
         "classification_correct_after": classification_correct_after,
@@ -210,9 +219,18 @@ def _process_one_target(
 
 
 # 主流程
+
 def run(args) -> dict:
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    model = _arg(args, "model", MODEL)
+    ridge_alpha = float(_arg(args, "ridge_alpha", RIDGE_ALPHA))
+    chart_sample_method = _arg(args, "chart_sample_method", CHART_SAMPLE_METHOD)
+    chart_trim_percent = float(_arg(args, "chart_trim_percent", CHART_TRIM_PERCENT))
+    target_trim_percent = float(_arg(args, "target_trim_percent", TRIM_PERCENT))
+    validation_threshold = float(_arg(args, "threshold", VALIDATION_THRESHOLD))
+    target_sequence = _arg(args, "target_sequence", TARGET_SEQUENCE)
 
     photo_bgr = cv2.imread(args.photo)
     standard_bgr = cv2.imread(args.standard)
@@ -242,6 +260,8 @@ def run(args) -> dict:
         rows=ROWS,
         cols=COLS,
         center_ratio=CENTER_RATIO,
+        sample_method=chart_sample_method,
+        trim_percent=chart_trim_percent,
     )
 
     reference_rgb = extract_chart_means(
@@ -249,25 +269,27 @@ def run(args) -> dict:
         rows=ROWS,
         cols=COLS,
         center_ratio=CENTER_RATIO,
+        sample_method=chart_sample_method,
+        trim_percent=chart_trim_percent,
     )
 
     W = fit_correction_model(
         captured_rgb,
         reference_rgb,
-        model=MODEL,
-        ridge_alpha=RIDGE_ALPHA,
+        model=model,
+        ridge_alpha=ridge_alpha,
     )
 
     corrected_photo_bgr = apply_correction_to_image(
         photo_bgr,
         W,
-        model=MODEL,
+        model=model,
     )
 
     corrected_chart_bgr = apply_correction_to_image(
         captured_chart_bgr,
         W,
-        model=MODEL,
+        model=model,
     )
 
     cv2.imwrite(str(out_dir / "03_corrected_photo.png"), corrected_photo_bgr)
@@ -278,6 +300,8 @@ def run(args) -> dict:
         rows=ROWS,
         cols=COLS,
         center_ratio=CENTER_RATIO,
+        sample_method=chart_sample_method,
+        trim_percent=chart_trim_percent,
     )
 
     lab_reference = rgb_to_lab(reference_rgb)
@@ -287,7 +311,7 @@ def run(args) -> dict:
     delta_e_before = delta_e_2000(lab_captured, lab_reference)
     delta_e_after = delta_e_2000(lab_corrected, lab_reference)
 
-    target_specs = _get_target_specs(photo_bgr)
+    target_specs = _get_target_specs(photo_bgr, target_sequence=target_sequence)
 
     target_results_with_masks = []
     annotated_before = photo_bgr.copy()
@@ -301,6 +325,8 @@ def run(args) -> dict:
             photo_bgr=photo_bgr,
             corrected_photo_bgr=corrected_photo_bgr,
             out_dir=out_dir,
+            trim_percent=target_trim_percent,
+            validation_threshold=validation_threshold,
         )
 
         target_results_with_masks.append(result)
@@ -381,13 +407,15 @@ def run(args) -> dict:
             "rows": ROWS,
             "cols": COLS,
             "center_ratio": CENTER_RATIO,
+            "sample_method": chart_sample_method,
+            "trim_percent": chart_trim_percent,
             "corners_order": "top-left, top-right, bottom-right, bottom-left",
             "corners": corners.round(3).tolist(),
             "perspective_matrix": perspective_matrix.round(8).tolist(),
         },
         "model": {
-            "type": MODEL,
-            "ridge_alpha": RIDGE_ALPHA,
+            "type": model,
+            "ridge_alpha": ridge_alpha,
             "weights": W.tolist(),
         },
         "chart_delta_e_2000": {
@@ -397,6 +425,8 @@ def run(args) -> dict:
             "after_mean": float(np.mean(delta_e_after)),
             "before_median": float(np.median(delta_e_before)),
             "after_median": float(np.median(delta_e_after)),
+            "before_p95": float(np.percentile(delta_e_before, 95)),
+            "after_p95": float(np.percentile(delta_e_after, 95)),
             "before_max": float(np.max(delta_e_before)),
             "after_max": float(np.max(delta_e_after)),
             "improvement_mean": float(np.mean(delta_e_before) - np.mean(delta_e_after)),
@@ -426,12 +456,18 @@ def run(args) -> dict:
 def print_summary(report: dict) -> None:
     chart_de = report["chart_delta_e_2000"]
     targets = report.get("target_colors") or []
+    model = report.get("model") or {}
+    chart = report.get("chart") or {}
 
     print("\n处理完成。")
 
     print("\n色卡校正模型评估：")
+    print(f"  model: {model.get('type')} | ridge_alpha: {model.get('ridge_alpha')}")
+    print(f"  chart sampling: {chart.get('sample_method')} | trim_percent: {chart.get('trim_percent')}")
     print(f"  校正前 mean ΔE00: {chart_de['before_mean']:.4f}")
     print(f"  校正后 mean ΔE00: {chart_de['after_mean']:.4f}")
+    print(f"  校正前/后 P95 ΔE00: {chart_de.get('before_p95', float('nan')):.4f} -> {chart_de.get('after_p95', float('nan')):.4f}")
+    print(f"  校正前/后 max ΔE00: {chart_de['before_max']:.4f} -> {chart_de['after_max']:.4f}")
     print(f"  mean ΔE00 改善: {chart_de['improvement_mean']:.4f}")
 
     print("\n目标胶块验证结果：")

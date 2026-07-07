@@ -12,7 +12,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--photo",
-        default="IMG_0800.jpg",
+        default="qiangguang.jpg",
         help="实拍图（包含色卡和胶块）",
     )
 

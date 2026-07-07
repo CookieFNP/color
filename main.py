@@ -12,7 +12,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--photo",
-        default="qiangguang.jpg",
+        default="IMG_0800.jpg",
         help="实拍图（包含色卡和胶块）",
     )
 
@@ -74,6 +74,26 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=5.0,
         help="目标胶块通过阈值，默认 ΔE00 <= 5。",
+    )
+
+    parser.add_argument(
+        "--white-balance",
+        default="none",
+        choices=["none", "gray_world", "chart_gray"],
+        help="白平衡预处理：none=不处理；gray_world=灰度世界；chart_gray=使用色卡最后一行灰阶估计白平衡。",
+    )
+
+    parser.add_argument(
+        "--correction-strength",
+        type=float,
+        default=1.0,
+        help="校正强度 alpha。1=完整校正；0=原图；0.25/0.5 可用于测试强光下是否过校正。",
+    )
+
+    parser.add_argument(
+        "--alpha-sweep",
+        default="0,0.25,0.5,0.75,1",
+        help="离线评估校正强度列表，例如 0,0.25,0.5,0.75,1；设为空字符串可关闭。",
     )
 
     return parser

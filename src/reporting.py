@@ -131,6 +131,12 @@ def save_target_validation_csv(path: str | Path, target_results: list[dict]) -> 
         "after_L",
         "after_a",
         "after_b",
+        "before_dL",
+        "before_da",
+        "before_db",
+        "after_dL",
+        "after_da",
+        "after_db",
         "deltaE_before_to_standard",
         "deltaE_after_to_standard",
         "deltaE_improvement",
@@ -182,6 +188,12 @@ def save_target_validation_csv(path: str | Path, target_results: list[dict]) -> 
                 "after_L": item.get("after_lab", [None, None, None])[0],
                 "after_a": item.get("after_lab", [None, None, None])[1],
                 "after_b": item.get("after_lab", [None, None, None])[2],
+                "before_dL": item.get("delta_lab_to_standard", {}).get("before", [None, None, None])[0],
+                "before_da": item.get("delta_lab_to_standard", {}).get("before", [None, None, None])[1],
+                "before_db": item.get("delta_lab_to_standard", {}).get("before", [None, None, None])[2],
+                "after_dL": item.get("delta_lab_to_standard", {}).get("after", [None, None, None])[0],
+                "after_da": item.get("delta_lab_to_standard", {}).get("after", [None, None, None])[1],
+                "after_db": item.get("delta_lab_to_standard", {}).get("after", [None, None, None])[2],
                 "deltaE_before_to_standard": de.get("before"),
                 "deltaE_after_to_standard": de.get("after"),
                 "deltaE_improvement": de.get("improvement"),
@@ -196,6 +208,30 @@ def save_target_validation_csv(path: str | Path, target_results: list[dict]) -> 
                 "target_mask_debug": item.get("outputs", {}).get("target_mask_debug"),
                 "target_before_after": item.get("outputs", {}).get("target_before_after"),
             })
+
+
+
+def save_alpha_sweep_csv(path: str | Path, alpha_sweep: list[dict]) -> None:
+    # 保存校正强度 alpha 对目标胶块 ΔE 的影响。
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    headers = [
+        "alpha",
+        "target_mean_deltaE",
+        "target_median_deltaE",
+        "target_max_deltaE",
+        "target_p95_deltaE",
+        "harm_count",
+        "harm_rate",
+        "classification_acc",
+    ]
+
+    with path.open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+        for row in alpha_sweep:
+            writer.writerow({key: row.get(key) for key in headers})
 
 
 def save_validation_bar_plot(path: str | Path, target_results: list[dict]) -> None:

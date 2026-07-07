@@ -1,0 +1,2352 @@
+{
+  "input": {
+    "photo": "qiangguang.jpg",
+    "standard_chart": "standard_chart.png"
+  },
+  "built_in_standard_lab_database": [
+    {
+      "code": "W015",
+      "name": "桔红",
+      "label": "W015桔红",
+      "lab": [
+        55.74,
+        43.62,
+        41.71
+      ]
+    },
+    {
+      "code": "W016",
+      "name": "橙红色",
+      "label": "W016橙红色",
+      "lab": [
+        52.79,
+        33.02,
+        27.21
+      ]
+    },
+    {
+      "code": "W031",
+      "name": "淡雅黄",
+      "label": "W031淡雅黄",
+      "lab": [
+        77.97,
+        -2.16,
+        28.66
+      ]
+    },
+    {
+      "code": "W032",
+      "name": "柠檬黄",
+      "label": "W032柠檬黄",
+      "lab": [
+        82.78,
+        -5.38,
+        30.47
+      ]
+    },
+    {
+      "code": "W047",
+      "name": "浅棕桐",
+      "label": "W047浅棕桐",
+      "lab": [
+        65.94,
+        0.97,
+        14.8
+      ]
+    },
+    {
+      "code": "W048",
+      "name": "灰米色",
+      "label": "W048灰米色",
+      "lab": [
+        73.34,
+        3.62,
+        10.9
+      ]
+    },
+    {
+      "code": "W063",
+      "name": "木纹灰",
+      "label": "W063木纹灰",
+      "lab": [
+        75.47,
+        -1.39,
+        4.54
+      ]
+    },
+    {
+      "code": "W064",
+      "name": "乌托银",
+      "label": "W064乌托银",
+      "lab": [
+        58.72,
+        -2.12,
+        0.87
+      ]
+    },
+    {
+      "code": "W079",
+      "name": "钛晶灰",
+      "label": "W079钛晶灰",
+      "lab": [
+        41.96,
+        0.97,
+        2.06
+      ]
+    },
+    {
+      "code": "W080",
+      "name": "中行灰",
+      "label": "W080中行灰",
+      "lab": [
+        50.81,
+        0.5,
+        0.62
+      ]
+    },
+    {
+      "code": "W095",
+      "name": "暗灰色",
+      "label": "W095暗灰色",
+      "lab": [
+        42.77,
+        1.65,
+        -1.27
+      ]
+    },
+    {
+      "code": "W096",
+      "name": "慕云灰",
+      "label": "W096慕云灰",
+      "lab": [
+        76.9,
+        -4.65,
+        11.02
+      ]
+    }
+  ],
+  "chart": {
+    "rows": 4,
+    "cols": 6,
+    "center_ratio": 0.5,
+    "sample_method": "mean",
+    "trim_percent": 10.0,
+    "corners_order": "top-left, top-right, bottom-right, bottom-left",
+    "corners": [
+      [
+        512.5499877929688,
+        630.135009765625
+      ],
+      [
+        1089.9219970703125,
+        639.1799926757812
+      ],
+      [
+        1101.9820556640625,
+        1017.56201171875
+      ],
+      [
+        509.5350036621094,
+        1034.14501953125
+      ]
+    ],
+    "perspective_matrix": [
+      [
+        1.12306554,
+        0.00838104,
+        -580.90841792
+      ],
+      [
+        -0.02205193,
+        1.40765094,
+        -875.7074204
+      ],
+      [
+        -0.00010768,
+        6.645e-05,
+        1.0
+      ]
+    ]
+  },
+  "model": {
+    "type": "root_poly2",
+    "ridge_alpha": 1e-06,
+    "weights": [
+      [
+        0.616572916507721,
+        -0.12828423082828522,
+        -0.17320439219474792
+      ],
+      [
+        -0.2793578803539276,
+        0.3603651821613312,
+        -0.2322072833776474
+      ],
+      [
+        -0.03147147595882416,
+        -0.13832487165927887,
+        0.4508804678916931
+      ],
+      [
+        0.4128336012363434,
+        0.501470148563385,
+        0.3566415309906006
+      ],
+      [
+        0.008675177581608295,
+        -0.0333012156188488,
+        0.2191857099533081
+      ],
+      [
+        0.10830802470445633,
+        0.2539999783039093,
+        0.1270769238471985
+      ],
+      [
+        0.034444715827703476,
+        0.04809624329209328,
+        0.06326253712177277
+      ]
+    ]
+  },
+  "white_balance": {
+    "method": "chart_gray",
+    "applied": true,
+    "gains_rgb": {
+      "R_gain": 1.104371428489685,
+      "G_gain": 1.1612895727157593,
+      "B_gain": 1.4438718557357788
+    },
+    "outputs": {
+      "white_balanced_photo": "output_strong_chart_gray\\01b_white_balanced_photo.png",
+      "white_balanced_chart_warped": "output_strong_chart_gray\\01c_white_balanced_chart_warped.png"
+    }
+  },
+  "correction_control": {
+    "correction_strength": 1.0,
+    "alpha_sweep_values": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "note": "correction_strength=1 means full correction; 0 means original image; alpha_sweep is evaluated in Lab space from before_lab to full_after_lab."
+  },
+  "chart_delta_e_2000": {
+    "before_each_patch": [
+      3.914,
+      7.2432,
+      6.3356,
+      5.1993,
+      10.4413,
+      10.6772,
+      5.2948,
+      5.6278,
+      5.4982,
+      4.4349,
+      9.4639,
+      4.6976,
+      5.0478,
+      4.3655,
+      4.5308,
+      3.0263,
+      2.7542,
+      3.9075,
+      3.7648,
+      3.6502,
+      2.1392,
+      8.4047,
+      10.9608,
+      12.7107
+    ],
+    "after_each_patch": [
+      6.3095,
+      4.6417,
+      2.801,
+      4.5306,
+      5.0785,
+      3.1176,
+      1.5174,
+      2.9697,
+      1.5703,
+      4.276,
+      2.8216,
+      0.7853,
+      3.4519,
+      6.0586,
+      2.6596,
+      2.3685,
+      2.5292,
+      7.6018,
+      2.581,
+      3.1736,
+      2.8002,
+      5.171,
+      4.4458,
+      5.7743
+    ],
+    "before_mean": 6.003764404681544,
+    "after_mean": 3.709774129158168,
+    "before_median": 5.123539055889106,
+    "after_median": 3.1455842809699064,
+    "before_p95": 10.918229969090252,
+    "after_p95": 6.271825969791491,
+    "before_max": 12.710713895882623,
+    "after_max": 7.601770050337899,
+    "improvement_mean": 2.2939902755233756
+  },
+  "target_summary": {
+    "count": 12,
+    "before_deltaE": {
+      "mean": 3.557848060181911,
+      "median": 3.729512083135428,
+      "max": 5.240037794930653,
+      "p95": 4.900103446147419,
+      "std": 1.0920066412153864
+    },
+    "after_deltaE": {
+      "mean": 4.0401032997077335,
+      "median": 3.957836286838927,
+      "max": 5.656766711072519,
+      "p95": 5.450978445976864,
+      "std": 0.984785998656389
+    },
+    "mean_improvement": -0.48225523952582233,
+    "harm_count": 6,
+    "harm_rate": 0.5,
+    "classification_acc": 0.9166666666666666
+  },
+  "delta_lab_summary": {
+    "before": {
+      "mean_dL": -1.9737499877810478,
+      "mean_da": 0.8566667220244805,
+      "mean_db": 4.603250001246731,
+      "mean_abs_dL": 2.2705833291014037,
+      "mean_abs_da": 2.198666733379165,
+      "mean_abs_db": 4.603250001246731
+    },
+    "after": {
+      "mean_dL": 0.7634999950726827,
+      "mean_da": -1.3415833575030167,
+      "mean_db": -4.754916648070018,
+      "mean_abs_dL": 1.588999996582667,
+      "mean_abs_da": 1.3867500238120556,
+      "mean_abs_db": 4.754916648070018
+    }
+  },
+  "alpha_sweep": [
+    {
+      "alpha": 0.0,
+      "target_mean_deltaE": 3.5578964649677207,
+      "target_median_deltaE": 3.729604955267331,
+      "target_max_deltaE": 5.2397455310464585,
+      "target_p95_deltaE": 4.900175264796211,
+      "harm_count": 0,
+      "harm_rate": 0.0,
+      "classification_acc": 0.8333333333333334
+    },
+    {
+      "alpha": 0.25,
+      "target_mean_deltaE": 2.4930650906264424,
+      "target_median_deltaE": 2.5308658862785127,
+      "target_max_deltaE": 4.213831322513463,
+      "target_p95_deltaE": 3.8771571957136817,
+      "harm_count": 0,
+      "harm_rate": 0.0,
+      "classification_acc": 1.0
+    },
+    {
+      "alpha": 0.5,
+      "target_mean_deltaE": 2.0882095835620547,
+      "target_median_deltaE": 2.0628155480860473,
+      "target_max_deltaE": 3.473248178782665,
+      "target_p95_deltaE": 3.4381709249576584,
+      "harm_count": 1,
+      "harm_rate": 0.08333333333333333,
+      "classification_acc": 1.0
+    },
+    {
+      "alpha": 0.75,
+      "target_mean_deltaE": 2.7345505568800053,
+      "target_median_deltaE": 2.4951472388090687,
+      "target_max_deltaE": 3.995461318761485,
+      "target_p95_deltaE": 3.9645861638506963,
+      "harm_count": 2,
+      "harm_rate": 0.16666666666666666,
+      "classification_acc": 0.9166666666666666
+    },
+    {
+      "alpha": 1.0,
+      "target_mean_deltaE": 4.040121805446563,
+      "target_median_deltaE": 3.9579019251799217,
+      "target_max_deltaE": 5.656677849583546,
+      "target_p95_deltaE": 5.450755476503826,
+      "harm_count": 6,
+      "harm_rate": 0.5,
+      "classification_acc": 0.9166666666666666
+    }
+  ],
+  "target_colors": [
+    {
+      "index": 1,
+      "input_label": "W015",
+      "standard": {
+        "code": "W015",
+        "name": "桔红",
+        "label": "W015桔红",
+        "lab": [
+          55.74,
+          43.62,
+          41.71
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        1293,
+        354,
+        1411,
+        474
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 5766,
+      "before_rgb": [
+        222.31900024414062,
+        84.57099914550781,
+        45.92399978637695
+      ],
+      "after_rgb": [
+        207.2830047607422,
+        101.2750015258789,
+        73.96499633789062
+      ],
+      "full_after_rgb": [
+        207.2830047607422,
+        101.2750015258789,
+        73.96499633789062
+      ],
+      "before_lab": [
+        54.25,
+        51.89699935913086,
+        49.137001037597656
+      ],
+      "after_lab": [
+        55.242000579833984,
+        39.7760009765625,
+        34.84199905395508
+      ],
+      "full_after_lab": [
+        55.242000579833984,
+        39.7760009765625,
+        34.84199905395508
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -1.4900000095367432,
+          8.277000427246094,
+          7.427000045776367
+        ],
+        "after": [
+          -0.49799999594688416,
+          -3.8440001010894775,
+          -6.868000030517578
+        ],
+        "full_after": [
+          -0.49799999594688416,
+          -3.8440001010894775,
+          -6.868000030517578
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          55.7400016784668,
+          43.619998931884766,
+          41.709999084472656
+        ],
+        "before": 3.143857652296049,
+        "after": 2.6582138443241683,
+        "improvement": 0.48564380797188056
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 2.6582138443241683,
+        "improvement_full": 0.48564380797188056
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W015",
+          "name": "桔红",
+          "label": "W015桔红",
+          "lab": [
+            55.74,
+            43.62,
+            41.71
+          ],
+          "delta_e_2000": 3.143857652296049
+        },
+        {
+          "code": "W016",
+          "name": "橙红色",
+          "label": "W016橙红色",
+          "lab": [
+            52.79,
+            33.02,
+            27.21
+          ],
+          "delta_e_2000": 8.49611780841681
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 27.23140629386314
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W015",
+          "name": "桔红",
+          "label": "W015桔红",
+          "lab": [
+            55.74,
+            43.62,
+            41.71
+          ],
+          "delta_e_2000": 2.6582138443241683
+        },
+        {
+          "code": "W016",
+          "name": "橙红色",
+          "label": "W016橙红色",
+          "lab": [
+            52.79,
+            33.02,
+            27.21
+          ],
+          "delta_e_2000": 4.0874674918864775
+        },
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 24.509596897530706
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_01_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_01_before_after.png"
+      }
+    },
+    {
+      "index": 2,
+      "input_label": "W016",
+      "standard": {
+        "code": "W016",
+        "name": "橙红色",
+        "label": "W016橙红色",
+        "lab": [
+          52.79,
+          33.02,
+          27.21
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        1302,
+        515,
+        1420,
+        630
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 6071,
+      "before_rgb": [
+        209.052001953125,
+        95.63099670410156,
+        70.96900177001953
+      ],
+      "after_rgb": [
+        199.03500366210938,
+        113.78500366210938,
+        100.82099914550781
+      ],
+      "full_after_rgb": [
+        199.03500366210938,
+        113.78500366210938,
+        100.82099914550781
+      ],
+      "before_lab": [
+        54.3650016784668,
+        43.07500076293945,
+        35.51100158691406
+      ],
+      "after_lab": [
+        57.145999908447266,
+        32.180999755859375,
+        21.85700035095215
+      ],
+      "full_after_lab": [
+        57.145999908447266,
+        32.180999755859375,
+        21.85700035095215
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          1.5750000476837158,
+          10.055000305175781,
+          8.300999641418457
+        ],
+        "after": [
+          4.355999946594238,
+          -0.8389999866485596,
+          -5.353000164031982
+        ],
+        "full_after": [
+          4.355999946594238,
+          -0.8389999866485596,
+          -5.353000164031982
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          52.790000915527344,
+          33.02000045776367,
+          27.209999084472656
+        ],
+        "before": 4.3295043051127085,
+        "after": 5.06624773078294,
+        "improvement": -0.7367434256702312
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 5.06624773078294,
+        "improvement_full": -0.7367434256702312
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": false,
+      "nearest_before": [
+        {
+          "code": "W015",
+          "name": "桔红",
+          "label": "W015桔红",
+          "lab": [
+            55.74,
+            43.62,
+            41.71
+          ],
+          "delta_e_2000": 3.2097849071770845
+        },
+        {
+          "code": "W016",
+          "name": "橙红色",
+          "label": "W016橙红色",
+          "lab": [
+            52.79,
+            33.02,
+            27.21
+          ],
+          "delta_e_2000": 4.3295043051127085
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 24.978149129937616
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W016",
+          "name": "橙红色",
+          "label": "W016橙红色",
+          "lab": [
+            52.79,
+            33.02,
+            27.21
+          ],
+          "delta_e_2000": 5.06624773078294
+        },
+        {
+          "code": "W015",
+          "name": "桔红",
+          "label": "W015桔红",
+          "lab": [
+            55.74,
+            43.62,
+            41.71
+          ],
+          "delta_e_2000": 8.55661273931681
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 22.51345730444443
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_02_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_02_before_after.png"
+      }
+    },
+    {
+      "index": 3,
+      "input_label": "W031",
+      "standard": {
+        "code": "W031",
+        "name": "淡雅黄",
+        "label": "W031淡雅黄",
+        "lab": [
+          77.97,
+          -2.16,
+          28.66
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        1141,
+        342,
+        1260,
+        465
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 5799,
+      "before_rgb": [
+        205.3509979248047,
+        187.67599487304688,
+        120.16500091552734
+      ],
+      "after_rgb": [
+        200.57400512695312,
+        192.406005859375,
+        148.8719940185547
+      ],
+      "full_after_rgb": [
+        200.57400512695312,
+        192.406005859375,
+        148.8719940185547
+      ],
+      "before_lab": [
+        76.2030029296875,
+        -3.196000099182129,
+        36.409000396728516
+      ],
+      "after_lab": [
+        77.52100372314453,
+        -4.035999774932861,
+        23.020000457763672
+      ],
+      "full_after_lab": [
+        77.52100372314453,
+        -4.035999774932861,
+        23.020000457763672
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -1.7669999599456787,
+          -1.0360000133514404,
+          7.749000072479248
+        ],
+        "after": [
+          -0.4490000009536743,
+          -1.8760000467300415,
+          -5.639999866485596
+        ],
+        "full_after": [
+          -0.4490000009536743,
+          -1.8760000467300415,
+          -5.639999866485596
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          77.97000122070312,
+          -2.1600000858306885,
+          28.65999984741211
+        ],
+        "before": 3.4201011985293155,
+        "after": 3.327273270790342,
+        "improvement": 0.09282792773897341
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 3.327273270790342,
+        "improvement_full": 0.09282792773897341
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 3.4201011985293155
+        },
+        {
+          "code": "W032",
+          "name": "柠檬黄",
+          "label": "W032柠檬黄",
+          "lab": [
+            82.78,
+            -5.38,
+            30.47
+          ],
+          "delta_e_2000": 5.553135114383499
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 12.947642051057242
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 3.327273270790342
+        },
+        {
+          "code": "W032",
+          "name": "柠檬黄",
+          "label": "W032柠檬黄",
+          "lab": [
+            82.78,
+            -5.38,
+            30.47
+          ],
+          "delta_e_2000": 4.984484069320184
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 7.2267093793306625
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_03_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_03_before_after.png"
+      }
+    },
+    {
+      "index": 4,
+      "input_label": "W032",
+      "standard": {
+        "code": "W032",
+        "name": "柠檬黄",
+        "label": "W032柠檬黄",
+        "lab": [
+          82.78,
+          -5.38,
+          30.47
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        1154,
+        489,
+        1264,
+        619
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 5163,
+      "before_rgb": [
+        205.64199829101562,
+        192.8979949951172,
+        115.96299743652344
+      ],
+      "after_rgb": [
+        200.0279998779297,
+        200.85899353027344,
+        145.63800048828125
+      ],
+      "full_after_rgb": [
+        200.0279998779297,
+        200.85899353027344,
+        145.63800048828125
+      ],
+      "before_lab": [
+        77.53600311279297,
+        -6.23799991607666,
+        40.249000549316406
+      ],
+      "after_lab": [
+        79.6449966430664,
+        -9.065999984741211,
+        27.59600067138672
+      ],
+      "full_after_lab": [
+        79.6449966430664,
+        -9.065999984741211,
+        27.59600067138672
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -5.24399995803833,
+          -0.8579999804496765,
+          9.779000282287598
+        ],
+        "after": [
+          -3.134999990463257,
+          -3.686000108718872,
+          -2.874000072479248
+        ],
+        "full_after": [
+          -3.134999990463257,
+          -3.686000108718872,
+          -2.874000072479248
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          82.77999877929688,
+          -5.380000114440918,
+          30.469999313354492
+        ],
+        "before": 5.240037794930653,
+        "after": 4.0183200492291125,
+        "improvement": 1.2217177457015405
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 4.0183200492291125,
+        "improvement_full": 1.2217177457015405
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 5.113799323231964
+        },
+        {
+          "code": "W032",
+          "name": "柠檬黄",
+          "label": "W032柠檬黄",
+          "lab": [
+            82.78,
+            -5.38,
+            30.47
+          ],
+          "delta_e_2000": 5.240037794930653
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 13.8246956408822
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W032",
+          "name": "柠檬黄",
+          "label": "W032柠檬黄",
+          "lab": [
+            82.78,
+            -5.38,
+            30.47
+          ],
+          "delta_e_2000": 4.0183200492291125
+        },
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 5.751621344147718
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 9.222766330795105
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_04_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_04_before_after.png"
+      }
+    },
+    {
+      "index": 5,
+      "input_label": "W047",
+      "standard": {
+        "code": "W047",
+        "name": "浅棕桐",
+        "label": "W047浅棕桐",
+        "lab": [
+          65.94,
+          0.97,
+          14.8
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        1005,
+        330,
+        1103,
+        449
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 4460,
+      "before_rgb": [
+        173.92799377441406,
+        157.28399658203125,
+        124.1760025024414
+      ],
+      "after_rgb": [
+        173.4290008544922,
+        164.20799255371094,
+        149.19500732421875
+      ],
+      "full_after_rgb": [
+        173.4290008544922,
+        164.20799255371094,
+        149.19500732421875
+      ],
+      "before_lab": [
+        65.48400115966797,
+        0.8849999904632568,
+        19.566999435424805
+      ],
+      "after_lab": [
+        67.82499694824219,
+        0.7200000286102295,
+        8.982999801635742
+      ],
+      "full_after_lab": [
+        67.82499694824219,
+        0.7200000286102295,
+        8.982999801635742
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -0.4560000002384186,
+          -0.08500000089406967,
+          4.767000198364258
+        ],
+        "after": [
+          1.8849999904632568,
+          -0.25,
+          -5.816999912261963
+        ],
+        "full_after": [
+          1.8849999904632568,
+          -0.25,
+          -5.816999912261963
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          65.94000244140625,
+          0.9700000286102295,
+          14.800000190734863
+        ],
+        "before": 2.7293329622380913,
+        "after": 4.084035684364551,
+        "improvement": -1.3547027221264596
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 4.084035684364551,
+        "improvement_full": -1.3547027221264596
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 2.7293329622380913
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 9.065679232481488
+        },
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 10.78356824986883
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 4.084035684364551
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 5.725667578923614
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 7.390267296708726
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_05_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_05_before_after.png"
+      }
+    },
+    {
+      "index": 6,
+      "input_label": "W048",
+      "standard": {
+        "code": "W048",
+        "name": "灰米色",
+        "label": "W048灰米色",
+        "lab": [
+          73.34,
+          3.62,
+          10.9
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        984,
+        480,
+        1104,
+        613
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 5451,
+      "before_rgb": [
+        189.9949951171875,
+        171.99899291992188,
+        147.01800537109375
+      ],
+      "after_rgb": [
+        188.16400146484375,
+        177.84800720214844,
+        168.51699829101562
+      ],
+      "full_after_rgb": [
+        188.16400146484375,
+        177.84800720214844,
+        168.51699829101562
+      ],
+      "before_lab": [
+        71.25499725341797,
+        2.4719998836517334,
+        15.223999977111816
+      ],
+      "after_lab": [
+        73.11499786376953,
+        2.0429999828338623,
+        6.078999996185303
+      ],
+      "full_after_lab": [
+        73.11499786376953,
+        2.0429999828338623,
+        6.078999996185303
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -2.0850000381469727,
+          -1.1480000019073486,
+          4.323999881744385
+        ],
+        "after": [
+          -0.22499999403953552,
+          -1.5770000219345093,
+          -4.821000099182129
+        ],
+        "full_after": [
+          -0.22499999403953552,
+          -1.5770000219345093,
+          -4.821000099182129
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          73.33999633789062,
+          3.619999885559082,
+          10.899999618530273
+        ],
+        "before": 3.77784431200562,
+        "after": 3.7619319054232188,
+        "improvement": 0.01591240658240123
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 3.7619319054232188,
+        "improvement_full": 0.01591240658240123
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 3.77784431200562
+        },
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 4.5711627357649185
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 9.485346517711458
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 3.7619319054232188
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 5.292761974194302
+        },
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 8.469116717661036
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_06_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_06_before_after.png"
+      }
+    },
+    {
+      "index": 7,
+      "input_label": "W063",
+      "standard": {
+        "code": "W063",
+        "name": "木纹灰",
+        "label": "W063木纹灰",
+        "lab": [
+          75.47,
+          -1.39,
+          4.54
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        827,
+        315,
+        951,
+        441
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 6018,
+      "before_rgb": [
+        186.1999969482422,
+        185.61700439453125,
+        173.21600341796875
+      ],
+      "after_rgb": [
+        184.11199951171875,
+        188.8000030517578,
+        186.25999450683594
+      ],
+      "full_after_rgb": [
+        184.11199951171875,
+        188.8000030517578,
+        186.25999450683594
+      ],
+      "before_lab": [
+        75.10600280761719,
+        -2.0220000743865967,
+        6.359000205993652
+      ],
+      "after_lab": [
+        76.11199951171875,
+        -2.1019999980926514,
+        0.7129999995231628
+      ],
+      "full_after_lab": [
+        76.11199951171875,
+        -2.1019999980926514,
+        0.7129999995231628
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -0.36399999260902405,
+          -0.6320000290870667,
+          1.819000005722046
+        ],
+        "after": [
+          0.6420000195503235,
+          -0.7120000123977661,
+          -3.8269999027252197
+        ],
+        "full_after": [
+          0.6420000195503235,
+          -0.7120000123977661,
+          -3.8269999027252197
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          75.47000122070312,
+          -1.3899999856948853,
+          4.539999961853027
+        ],
+        "before": 1.6356666126563404,
+        "after": 3.632709301254602,
+        "improvement": -1.9970426885982615
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 3.632709301254602,
+        "improvement_full": -1.9970426885982615
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 1.6356666126563404
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 4.42430555306863
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 8.309713728698704
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 3.632709301254602
+        },
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 8.35844122857209
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 11.234709539714228
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_07_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_07_before_after.png"
+      }
+    },
+    {
+      "index": 8,
+      "input_label": "W064",
+      "standard": {
+        "code": "W064",
+        "name": "乌托银",
+        "label": "W064乌托银",
+        "lab": [
+          58.72,
+          -2.12,
+          0.87
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        830,
+        468,
+        948,
+        610
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 7461,
+      "before_rgb": [
+        137.6009979248047,
+        143.3040008544922,
+        138.23699951171875
+      ],
+      "after_rgb": [
+        140.86399841308594,
+        149.44900512695312,
+        155.4600067138672
+      ],
+      "full_after_rgb": [
+        140.86399841308594,
+        149.44900512695312,
+        155.4600067138672
+      ],
+      "before_lab": [
+        58.92599868774414,
+        -3.078000068664551,
+        1.968999981880188
+      ],
+      "after_lab": [
+        61.36800003051758,
+        -1.8489999771118164,
+        -4.223999977111816
+      ],
+      "full_after_lab": [
+        61.36800003051758,
+        -1.8489999771118164,
+        -4.223999977111816
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          0.20600000023841858,
+          -0.9580000042915344,
+          1.0989999771118164
+        ],
+        "after": [
+          2.6480000019073486,
+          0.2709999978542328,
+          -5.093999862670898
+        ],
+        "full_after": [
+          2.6480000019073486,
+          0.2709999978542328,
+          -5.093999862670898
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          58.720001220703125,
+          -2.119999885559082,
+          0.8700000047683716
+        ],
+        "before": 1.5498665880319822,
+        "after": 5.28260622908042,
+        "improvement": -3.732739641048438
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 5.28260622908042,
+        "improvement_full": -3.732739641048438
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": false,
+      "nearest_before": [
+        {
+          "code": "W064",
+          "name": "乌托银",
+          "label": "W064乌托银",
+          "lab": [
+            58.72,
+            -2.12,
+            0.87
+          ],
+          "delta_e_2000": 1.5498665880319822
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 9.242532689443347
+        },
+        {
+          "code": "W047",
+          "name": "浅棕桐",
+          "label": "W047浅棕桐",
+          "lab": [
+            65.94,
+            0.97,
+            14.8
+          ],
+          "delta_e_2000": 12.583074299073143
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W064",
+          "name": "乌托银",
+          "label": "W064乌托银",
+          "lab": [
+            58.72,
+            -2.12,
+            0.87
+          ],
+          "delta_e_2000": 5.28260622908042
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 11.283142611605154
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 13.790581025042757
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_08_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_08_before_after.png"
+      }
+    },
+    {
+      "index": 9,
+      "input_label": "W079",
+      "standard": {
+        "code": "W079",
+        "name": "钛晶灰",
+        "label": "W079钛晶灰",
+        "lab": [
+          41.96,
+          0.97,
+          2.06
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        658,
+        298,
+        780,
+        441
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 6436,
+      "before_rgb": [
+        90.24099731445312,
+        87.32499694824219,
+        82.48699951171875
+      ],
+      "after_rgb": [
+        99.81999969482422,
+        103.73300170898438,
+        108.69400024414062
+      ],
+      "full_after_rgb": [
+        99.81999969482422,
+        103.73300170898438,
+        108.69400024414062
+      ],
+      "before_lab": [
+        37.24599838256836,
+        0.1940000057220459,
+        3.2239999771118164
+      ],
+      "after_lab": [
+        43.71699905395508,
+        -0.43299999833106995,
+        -3.305000066757202
+      ],
+      "full_after_lab": [
+        43.71699905395508,
+        -0.43299999833106995,
+        -3.305000066757202
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -4.714000225067139,
+          -0.7760000228881836,
+          1.1640000343322754
+        ],
+        "after": [
+          1.7569999694824219,
+          -1.402999997138977,
+          -5.364999771118164
+        ],
+        "full_after": [
+          1.7569999694824219,
+          -1.402999997138977,
+          -5.364999771118164
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          41.959999084472656,
+          0.9700000286102295,
+          2.059999942779541
+        ],
+        "before": 4.414719332434329,
+        "after": 5.656766711072519,
+        "improvement": -1.2420473786381905
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 5.656766711072519,
+        "improvement_full": -1.2420473786381905
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": false,
+      "nearest_before": [
+        {
+          "code": "W079",
+          "name": "钛晶灰",
+          "label": "W079钛晶灰",
+          "lab": [
+            41.96,
+            0.97,
+            2.06
+          ],
+          "delta_e_2000": 4.414719332434329
+        },
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 6.840043321923348
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 12.893879481927785
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 3.7556564569638655
+        },
+        {
+          "code": "W079",
+          "name": "钛晶灰",
+          "label": "W079钛晶灰",
+          "lab": [
+            41.96,
+            0.97,
+            2.06
+          ],
+          "delta_e_2000": 5.656766711072519
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 7.982200194390029
+        }
+      ],
+      "classification_correct_after": false,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_09_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_09_before_after.png"
+      }
+    },
+    {
+      "index": 10,
+      "input_label": "W080",
+      "standard": {
+        "code": "W080",
+        "name": "中行灰",
+        "label": "W080中行灰",
+        "lab": [
+          50.81,
+          0.5,
+          0.62
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        646,
+        465,
+        777,
+        601
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 7410,
+      "before_rgb": [
+        114.91200256347656,
+        114.16300201416016,
+        107.43800354003906
+      ],
+      "after_rgb": [
+        120.76899719238281,
+        125.02100372314453,
+        128.9669952392578
+      ],
+      "full_after_rgb": [
+        120.76899719238281,
+        125.02100372314453,
+        128.9669952392578
+      ],
+      "before_lab": [
+        47.983001708984375,
+        -1.0360000133514404,
+        3.825000047683716
+      ],
+      "after_lab": [
+        52.18000030517578,
+        -0.765999972820282,
+        -2.694000005722046
+      ],
+      "full_after_lab": [
+        52.18000030517578,
+        -0.765999972820282,
+        -2.694000005722046
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -2.8269999027252197,
+          -1.5360000133514404,
+          3.2049999237060547
+        ],
+        "after": [
+          1.3700000047683716,
+          -1.2660000324249268,
+          -3.313999891281128
+        ],
+        "full_after": [
+          1.3700000047683716,
+          -1.2660000324249268,
+          -3.313999891281128
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          50.810001373291016,
+          0.5,
+          0.6200000047683716
+        ],
+        "before": 4.6219753425975005,
+        "after": 3.8973525244487424,
+        "improvement": 0.7246228181487582
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 3.8973525244487424,
+        "improvement_full": 0.7246228181487582
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 4.6219753425975005
+        },
+        {
+          "code": "W079",
+          "name": "钛晶灰",
+          "label": "W079钛晶灰",
+          "lab": [
+            41.96,
+            0.97,
+            2.06
+          ],
+          "delta_e_2000": 6.595813578704984
+        },
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 7.976705261103497
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 3.8973525244487424
+        },
+        {
+          "code": "W064",
+          "name": "乌托银",
+          "label": "W064乌托银",
+          "lab": [
+            58.72,
+            -2.12,
+            0.87
+          ],
+          "delta_e_2000": 7.280232029181275
+        },
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 10.001927995576889
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_10_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_10_before_after.png"
+      }
+    },
+    {
+      "index": 11,
+      "input_label": "W095",
+      "standard": {
+        "code": "W095",
+        "name": "暗灰色",
+        "label": "W095暗灰色",
+        "lab": [
+          42.77,
+          1.65,
+          -1.27
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        486,
+        287,
+        610,
+        416
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 6077,
+      "before_rgb": [
+        91.07499694824219,
+        89.04399871826172,
+        91.61399841308594
+      ],
+      "after_rgb": [
+        100.85600280761719,
+        104.49400329589844,
+        114.95999908447266
+      ],
+      "full_after_rgb": [
+        100.85600280761719,
+        104.49400329589844,
+        114.95999908447266
+      ],
+      "before_lab": [
+        38.10300064086914,
+        1.3539999723434448,
+        -1.1920000314712524
+      ],
+      "after_lab": [
+        44.22700119018555,
+        0.9079999923706055,
+        -6.327000141143799
+      ],
+      "full_after_lab": [
+        44.22700119018555,
+        0.9079999923706055,
+        -6.327000141143799
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -4.666999816894531,
+          -0.29600000381469727,
+          0.07800000160932541
+        ],
+        "after": [
+          1.4570000171661377,
+          -0.7419999837875366,
+          -5.057000160217285
+        ],
+        "full_after": [
+          1.4570000171661377,
+          -0.7419999837875366,
+          -5.057000160217285
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          42.77000045776367,
+          1.649999976158142,
+          -1.2699999809265137
+        ],
+        "before": 4.150090767085105,
+        "after": 4.824377137087409,
+        "improvement": -0.6742863700023038
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 4.824377137087409,
+        "improvement_full": -0.6742863700023038
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 4.150090767085105
+        },
+        {
+          "code": "W079",
+          "name": "钛晶灰",
+          "label": "W079钛晶灰",
+          "lab": [
+            41.96,
+            0.97,
+            2.06
+          ],
+          "delta_e_2000": 4.647228052381985
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 12.121018326483643
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W095",
+          "name": "暗灰色",
+          "label": "W095暗灰色",
+          "lab": [
+            42.77,
+            1.65,
+            -1.27
+          ],
+          "delta_e_2000": 4.824377137087409
+        },
+        {
+          "code": "W079",
+          "name": "钛晶灰",
+          "label": "W079钛晶灰",
+          "lab": [
+            41.96,
+            0.97,
+            2.06
+          ],
+          "delta_e_2000": 7.78597281899926
+        },
+        {
+          "code": "W080",
+          "name": "中行灰",
+          "label": "W080中行灰",
+          "lab": [
+            50.81,
+            0.5,
+            0.62
+          ],
+          "delta_e_2000": 8.931819617053426
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_11_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_11_before_after.png"
+      }
+    },
+    {
+      "index": 12,
+      "input_label": "W096",
+      "standard": {
+        "code": "W096",
+        "name": "慕云灰",
+        "label": "W096慕云灰",
+        "lab": [
+          76.9,
+          -4.65,
+          11.02
+        ],
+        "source": "built-in standard database"
+      },
+      "roi_xyxy": [
+        471,
+        449,
+        603,
+        590
+      ],
+      "sampling_method": "glue block mask + highlight/shadow filtering + trimmed mean",
+      "trim_percent": 10.0,
+      "valid_mask_pixels": 8091,
+      "before_rgb": [
+        187.13299560546875,
+        186.74000549316406,
+        154.27000427246094
+      ],
+      "after_rgb": [
+        185.218994140625,
+        190.24899291992188,
+        173.2270050048828
+      ],
+      "full_after_rgb": [
+        185.218994140625,
+        190.24899291992188,
+        173.2270050048828
+      ],
+      "before_lab": [
+        75.0479965209961,
+        -5.376999855041504,
+        16.547000885009766
+      ],
+      "after_lab": [
+        76.25399780273438,
+        -4.824999809265137,
+        7.991000175476074
+      ],
+      "full_after_lab": [
+        76.25399780273438,
+        -4.824999809265137,
+        7.991000175476074
+      ],
+      "delta_lab_to_standard": {
+        "before": [
+          -1.8519999980926514,
+          -0.7269999980926514,
+          5.5269999504089355
+        ],
+        "after": [
+          -0.6460000276565552,
+          -0.17499999701976776,
+          -3.0290000438690186
+        ],
+        "full_after": [
+          -0.6460000276565552,
+          -0.17499999701976776,
+          -3.0290000438690186
+        ]
+      },
+      "delta_e_2000_to_standard": {
+        "reference_lab": [
+          76.9000015258789,
+          -4.650000095367432,
+          11.020000457763672
+        ],
+        "before": 3.6811798542652356,
+        "after": 2.2714052086347727,
+        "improvement": 1.409774645630463
+      },
+      "delta_e_2000_full_correction": {
+        "after_full": 2.2714052086347727,
+        "improvement_full": 1.409774645630463
+      },
+      "validation_threshold": 5.0,
+      "pass_after_threshold": true,
+      "nearest_before": [
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 3.6811798542652356
+        },
+        {
+          "code": "W031",
+          "name": "淡雅黄",
+          "label": "W031淡雅黄",
+          "lab": [
+            77.97,
+            -2.16,
+            28.66
+          ],
+          "delta_e_2000": 7.640391375128322
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 8.770549948704478
+        }
+      ],
+      "nearest_after": [
+        {
+          "code": "W096",
+          "name": "慕云灰",
+          "label": "W096慕云灰",
+          "lab": [
+            76.9,
+            -4.65,
+            11.02
+          ],
+          "delta_e_2000": 2.2714052086347727
+        },
+        {
+          "code": "W063",
+          "name": "木纹灰",
+          "label": "W063木纹灰",
+          "lab": [
+            75.47,
+            -1.39,
+            4.54
+          ],
+          "delta_e_2000": 4.722652126995547
+        },
+        {
+          "code": "W048",
+          "name": "灰米色",
+          "label": "W048灰米色",
+          "lab": [
+            73.34,
+            3.62,
+            10.9
+          ],
+          "delta_e_2000": 11.613299587794325
+        }
+      ],
+      "classification_correct_after": true,
+      "outputs": {
+        "target_mask_debug": "output_strong_chart_gray\\targets\\target_12_mask_debug.png",
+        "target_before_after": "output_strong_chart_gray\\targets\\target_12_before_after.png"
+      }
+    }
+  ],
+  "outputs": {
+    "captured_chart_warped": "output_strong_chart_gray\\01_captured_chart_warped.png",
+    "standard_chart": "output_strong_chart_gray\\02_standard_chart.png",
+    "corrected_photo": "output_strong_chart_gray\\03_corrected_photo.png",
+    "full_corrected_photo": "output_strong_chart_gray\\03b_full_corrected_photo.png",
+    "corrected_chart_warped": "output_strong_chart_gray\\04_corrected_chart_warped.png",
+    "full_corrected_chart_warped": "output_strong_chart_gray\\04b_full_corrected_chart_warped.png",
+    "photo_before_after": "output_strong_chart_gray\\05_photo_before_after.png",
+    "chart_before_after": "output_strong_chart_gray\\06_chart_before_after.png",
+    "chart_delta_e_plot": "output_strong_chart_gray\\08_chart_calibration_delta_e.png",
+    "chart_samples_csv": "output_strong_chart_gray\\09_chart_samples.csv",
+    "target_validation_csv": "output_strong_chart_gray\\11_target_validation.csv",
+    "target_validation_summary": "output_strong_chart_gray\\12_target_validation_summary.png",
+    "alpha_sweep_summary_csv": "output_strong_chart_gray\\13_alpha_sweep_summary.csv",
+    "report": "output_strong_chart_gray\\report.json"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "report": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\report.json",
+  "photo": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\qiangguang.jpg",
+  "output_visual_preview": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\14_visual_preview.png",
+  "output_compare": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\15_visual_preview_compare.png",
+  "output_background_mask": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\16_background_mask.png",
+  "strategy": {
+    "name": "preserve_L_correct_ab",
+    "description": "保留原图 L 明暗层次；胶块 a/b 向标准色靠近；白色/灰白背景 a/b 向 0 靠近。",
+    "target_ab_strength": 0.5,
+    "target_l_strength": 0.1,
+    "background_ab_neutral_strength": 0.55,
+    "background_min_L": 50.0,
+    "background_max_saturation": 80.0,
+    "target_mask_mode": "rectangle",
+    "feather": 25
+  },
+  "background_lab_mean": {
+    "before": [
+      74.81816222593747,
+      -0.25026891652033456,
+      1.8154242202483448
+    ],
+    "after": [
+      74.81816223263937,
+      -0.10301535473647545,
+      0.926606789228888
+    ],
+    "note": "理想中性白/灰背景的 a,b 应接近 0；L 不强制变成 100，以保留阴影和明暗层次。"
+  }
+}

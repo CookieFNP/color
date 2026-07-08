@@ -1,0 +1,140 @@
+{
+  "report": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\report.json",
+  "photo": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\IMG_0800.jpg",
+  "output_dir": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid",
+  "contact_sheet": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\contact_sheet.png",
+  "background_mask": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\background_mask.png",
+  "meaning": {
+    "glue_ab_alpha": "胶块颜色向标准色 a/b 靠近的强度，越大越接近标准色，但越可能不像现场光。",
+    "bg_alpha": "背景 a/b 向中性白灰靠近的强度，越大背景越不偏黄/偏蓝，但越可能丢失现场氛围。",
+    "l_alpha": "胶块 L 亮度向标准 L 靠近的强度，建议小，一般 0~0.1。"
+  },
+  "candidates": [
+    {
+      "index": 1,
+      "label": "V01  glue=0.30  bg=0.20  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v01_glue0.30_bg0.20_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.3,
+        "bg_alpha": 0.2,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 2,
+      "label": "V02  glue=0.50  bg=0.20  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v02_glue0.50_bg0.20_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.5,
+        "bg_alpha": 0.2,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 3,
+      "label": "V03  glue=0.70  bg=0.20  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v03_glue0.70_bg0.20_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.7,
+        "bg_alpha": 0.2,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 4,
+      "label": "V04  glue=0.30  bg=0.40  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v04_glue0.30_bg0.40_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.3,
+        "bg_alpha": 0.4,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 5,
+      "label": "V05  glue=0.50  bg=0.40  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v05_glue0.50_bg0.40_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.5,
+        "bg_alpha": 0.4,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 6,
+      "label": "V06  glue=0.70  bg=0.40  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v06_glue0.70_bg0.40_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.7,
+        "bg_alpha": 0.4,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 7,
+      "label": "V07  glue=0.30  bg=0.60  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v07_glue0.30_bg0.60_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.3,
+        "bg_alpha": 0.6,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 8,
+      "label": "V08  glue=0.50  bg=0.60  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v08_glue0.50_bg0.60_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.5,
+        "bg_alpha": 0.6,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    },
+    {
+      "index": 9,
+      "label": "V09  glue=0.70  bg=0.60  L=0.05",
+      "file": "C:\\Users\\70253\\PycharmProjects\\摸鱼\\color\\output_root_poly2\\visual_alpha_grid\\v09_glue0.70_bg0.60_L0.05.png",
+      "params": {
+        "glue_ab_alpha": 0.7,
+        "bg_alpha": 0.6,
+        "l_alpha": 0.05,
+        "bg_min_L": 50.0,
+        "bg_max_saturation": 80.0,
+        "feather": 25,
+        "mask_mode": "rectangle"
+      }
+    }
+  ]
+}

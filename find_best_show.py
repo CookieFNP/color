@@ -65,7 +65,7 @@ def get_report_score(report: dict):
         所有 target_colors 的 deltaE_after 平均值
     """
     # 方案1：优先尝试 report 内可能已有的总体指标
-    # 兼容不同 json 结构，尽量多试几种常见写法
+
     candidate_scores = []
 
     if isinstance(report.get("target_validation"), dict):
@@ -78,21 +78,17 @@ def get_report_score(report: dict):
         if sm.get("target_after_mean") is not None:
             candidate_scores.append(float(sm["target_after_mean"]))
         if sm.get("chart_after_mean") is not None:
-            # 这个不如 target_after_mean 直接，但也可以兜底
             candidate_scores.append(float(sm["chart_after_mean"]))
 
-    # 有些 report 可能直接在顶层
     if report.get("target_after_mean") is not None:
         candidate_scores.append(float(report["target_after_mean"]))
 
     if report.get("chart_after_mean") is not None:
         candidate_scores.append(float(report["chart_after_mean"]))
 
-    # 如果能拿到现成总体分数，优先取第一个
     if candidate_scores:
         return candidate_scores[0]
 
-    # 方案2：自己从 target_colors 里算平均 deltaE_after
     values = []
     for item in report.get("target_colors", []):
         de = item.get("delta_e_2000_to_standard", {})

@@ -5,7 +5,11 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from .calibration import apply_correction_to_image, fit_correction_model
+from .calibration import (
+    apply_correction_to_image,
+    fit_correction_model,
+    build_chart_sample_weights,
+)
 from .chart import extract_chart_means, warp_chart_from_photo
 from .color_math import delta_e_2000, rgb_to_lab
 from .glue_mask import (
@@ -56,6 +60,16 @@ TARGET_SEQUENCE = "all"
 WHITE_BALANCE = "none"
 CORRECTION_STRENGTH = 1.0
 ALPHA_SWEEP = "0,0.25,0.5,0.75,1"
+
+# 加权 root polynomial 参数
+# none       ：普通 root_poly2，24 个色卡点权重相同
+# gray       ：提高灰阶块权重，强化白平衡/明度约束
+# light      ：提高浅色块权重，强化浅黄/米色/浅灰约束
+# gray_light ：灰阶 + 浅色同时加权，当前胶块场景建议优先试
+CHART_WEIGHT_MODE = "none"
+GRAY_WEIGHT = 4.0
+LIGHT_WEIGHT = 2.5
+LIGHT_L_THRESHOLD = 70.0
 
 
 def _arg(args, name: str, default):
@@ -500,6 +514,11 @@ def run(args) -> dict:
     correction_strength = float(np.clip(_arg(args, "correction_strength", CORRECTION_STRENGTH), 0.0, 1.0))
     alpha_values = _parse_alpha_sweep(_arg(args, "alpha_sweep", ALPHA_SWEEP))
 
+    chart_weight_mode = str(_arg(args, "chart_weight_mode", CHART_WEIGHT_MODE)).strip().lower()
+    gray_weight = float(_arg(args, "gray_weight", GRAY_WEIGHT))
+    light_weight = float(_arg(args, "light_weight", LIGHT_WEIGHT))
+    light_l_threshold = float(_arg(args, "light_l_threshold", LIGHT_L_THRESHOLD))
+
     photo_bgr = cv2.imread(args.photo)
     standard_bgr = cv2.imread(args.standard)
 
@@ -552,11 +571,24 @@ def run(args) -> dict:
         chart_trim_percent=chart_trim_percent,
     )
 
+    chart_sample_weights = None
+
+    if chart_weight_mode != "none":
+        chart_sample_weights = build_chart_sample_weights(
+            reference_rgb,
+            mode=chart_weight_mode,
+            gray_weight=gray_weight,
+            light_weight=light_weight,
+            light_l_threshold=light_l_threshold,
+            normalize=True,
+        )
+
     W = fit_correction_model(
         captured_rgb,
         reference_rgb,
         model=model,
         ridge_alpha=ridge_alpha,
+        sample_weights=chart_sample_weights,
     )
 
     full_corrected_photo_bgr = apply_correction_to_image(
@@ -709,6 +741,22 @@ def run(args) -> dict:
             "type": model,
             "ridge_alpha": ridge_alpha,
             "weights": W.tolist(),
+            "chart_weight_mode": chart_weight_mode,
+            "chart_sample_weights": (
+                None
+                if chart_sample_weights is None
+                else np.asarray(chart_sample_weights, dtype=np.float32).round(6).tolist()
+            ),
+            "chart_weight_params": {
+                "gray_weight": gray_weight,
+                "light_weight": light_weight,
+                "light_l_threshold": light_l_threshold,
+                "note": (
+                    "Weighted root polynomial. "
+                    "Weights are normalized to mean 1 before fitting. "
+                    "Only ColorChecker patches are weighted; target glue standards are not used for fitting."
+                ),
+            },
         },
         "white_balance": white_balance_report,
         "correction_control": {
@@ -771,7 +819,12 @@ def print_summary(report: dict) -> None:
     print("\n处理完成。")
 
     print("\n色卡校正模型评估：")
-    print(f"  model: {model.get('type')} | ridge_alpha: {model.get('ridge_alpha')}")
+    print(
+        f"  model: {model.get('type')} | ridge_alpha: {model.get('ridge_alpha')} "
+        f"| chart_weight_mode: {model.get('chart_weight_mode', 'none')}"
+    )
+    if model.get("chart_sample_weights") is not None:
+        print(f"  chart_sample_weights: {model.get('chart_sample_weights')}")
     print(f"  chart sampling: {chart.get('sample_method')} | trim_percent: {chart.get('trim_percent')}")
     print(f"  white_balance: {white_balance.get('method')} | gains: {white_balance.get('gains_rgb')}")
     print(f"  correction_strength alpha: {correction_control.get('correction_strength')}")

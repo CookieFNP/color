@@ -1,0 +1,47 @@
+=== Runs Summary ===
+run_001: best=bg0p25_res0p00_family mean=7.0878, max=18.5848, acc=0.2344, harm=0.0781, chart_root_mean=3.2077
+run_002: best=bg0p25_res0p00_family mean=12.4819, max=22.8125, acc=0.0703, harm=0.7031, chart_root_mean=3.0029
+run_003: best=bg0p25_res0p00_family mean=17.8264, max=29.2402, acc=0.0469, harm=0.9141, chart_root_mean=3.6450
+run_004: best=bg0p25_res0p00_family mean=10.4600, max=26.9190, acc=0.2031, harm=0.0859, chart_root_mean=2.6744
+run_005: best=bg0p25_res0p00_family mean=11.7668, max=18.6511, acc=0.0078, harm=0.4141, chart_root_mean=2.5699
+run_006: best=bg0p25_res0p00_family mean=13.4128, max=25.0017, acc=0.0156, harm=0.3359, chart_root_mean=2.8754
+run_007: best=bg0p25_res0p00_family mean=10.5413, max=25.1257, acc=0.1172, harm=0.1641, chart_root_mean=3.2827
+run_008: best=bg0p25_res0p00_family mean=9.6962, max=26.4056, acc=0.2031, harm=0.0156, chart_root_mean=2.6187
+run_009: best=bg0p25_res0p00_family mean=13.8516, max=29.5616, acc=0.0547, harm=0.0234, chart_root_mean=3.0788
+run_010: best=bg0p25_res0p00_family mean=10.5959, max=24.3976, acc=0.1562, harm=0.1641, chart_root_mean=2.9081
+run_011: best= mean=nan, max=nan, acc=nan, harm=nan, chart_root_mean=nan
+run_012: best=bg0p25_res0p00_family mean=4.9853, max=11.1954, acc=0.2891, harm=0.0000, chart_root_mean=3.1941
+run_013: best=bg0p25_res0p00_family mean=8.9643, max=18.3384, acc=0.0859, harm=0.0625, chart_root_mean=2.3476
+run_014: best=bg0p25_res0p00_family mean=9.4339, max=24.9028, acc=0.2422, harm=0.0391, chart_root_mean=2.1965
+
+=== Worst Colors by final_mean_deltaE ===
+W024 亮黄: final_mean=20.5020, root_mean=20.5029, acc=0.000, most_pred=W127
+W027 木纹黄: final_mean=19.0655, root_mean=18.9645, acc=0.000, most_pred=W116
+W026 金色: final_mean=17.9498, root_mean=18.0016, acc=0.154, most_pred=W044
+W028 荧光色: final_mean=17.5366, root_mean=17.4348, acc=0.000, most_pred=W116
+W025 丁香棕: final_mean=16.7705, root_mean=16.8455, acc=0.077, most_pred=W115
+W047 浅棕桐: final_mean=16.7659, root_mean=16.6364, acc=0.000, most_pred=W114
+W030 浅暗黄: final_mean=16.7601, root_mean=16.6005, acc=0.077, most_pred=W115
+W056 玛瑙灰: final_mean=16.3947, root_mean=16.5832, acc=0.077, most_pred=W065
+W041 浅棕铜: final_mean=16.0417, root_mean=16.0494, acc=0.000, most_pred=W117
+W057 大理石灰: final_mean=15.9847, root_mean=16.1266, acc=0.077, most_pred=W065
+W015 桔红: final_mean=15.7383, root_mean=15.5893, acc=0.077, most_pred=W006
+W046 浅灰色: final_mean=15.6504, root_mean=15.5161, acc=0.000, most_pred=W126
+W029 杏黄色: final_mean=15.6317, root_mean=15.5361, acc=0.000, most_pred=W115
+W032 柠檬黄: final_mean=15.6096, root_mean=15.4031, acc=0.077, most_pred=W118
+W031 淡雅黄: final_mean=15.5742, root_mean=15.3610, acc=0.000, most_pred=W116
+W044 泥黄: final_mean=15.4328, root_mean=15.5706, acc=0.077, most_pred=W123
+W042 棕铜色: final_mean=15.3364, root_mean=15.4061, acc=0.000, most_pred=W114
+W063 木纹灰: final_mean=15.1754, root_mean=15.0457, acc=0.000, most_pred=W065
+W045 淡驼色: final_mean=14.8490, root_mean=14.6906, acc=0.000, most_pred=W114
+W043 深黄色: final_mean=14.7982, root_mean=14.8710, acc=0.000, most_pred=W126
+
+=== Groups ===
+W001-W016: final_mean=11.2727, max=22.6503, acc=0.096, harm=0.115
+W017-W032: final_mean=15.4925, max=29.5616, acc=0.115, harm=0.255
+W033-W048: final_mean=13.9874, max=26.6967, acc=0.096, harm=0.298
+W049-W064: final_mean=13.4236, max=29.2402, acc=0.072, harm=0.385
+W065-W080: final_mean=10.5421, max=28.5879, acc=0.135, harm=0.163
+W081-W096: final_mean=6.0752, max=25.0426, acc=0.101, harm=0.072
+W097-W112: final_mean=9.0689, max=26.9190, acc=0.173, harm=0.375
+W113-W128: final_mean=6.9710, max=22.8125, acc=0.274, harm=0.183

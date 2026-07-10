@@ -1,0 +1,176 @@
+{
+  "input": {
+    "photo": "pic5.jpg",
+    "standard_chart": "standard_chart.png",
+    "standards_csv": "data.csv",
+    "standards_count": 128,
+    "target_count": 128,
+    "eval_count": 128
+  },
+  "algorithm_note": "校正只使用 ColorChecker 标准和图像局部背景；不使用目标胶块标准 Lab 反推 shift。best 只用于离线评估候选参数。",
+  "chart": {
+    "corners": [
+      [
+        600.8048706054688,
+        559.009765625
+      ],
+      [
+        1703.1512451171875,
+        637.3756103515625
+      ],
+      [
+        1682.253662109375,
+        1279.9755859375
+      ],
+      [
+        543.3365478515625,
+        1201.6097412109375
+      ]
+    ],
+    "before_mean_deltaE": 4.277257482442614,
+    "before_max_deltaE": 11.796964115298467,
+    "root_after_mean_deltaE": 2.5698650825669915,
+    "root_after_max_deltaE": 4.6121633558792725
+  },
+  "root_poly2": {
+    "ridge_alpha": 1e-06,
+    "W": [
+      [
+        0.7661948946703395,
+        -0.139630272863546,
+        -0.22003772696030713
+      ],
+      [
+        -0.4713080899885873,
+        0.6311396967061489,
+        -0.21403411850300424
+      ],
+      [
+        0.0035883919498329534,
+        -0.08381742135751996,
+        0.7759920986568025
+      ],
+      [
+        0.5380096528072551,
+        0.3792725459524145,
+        0.3814980855289442
+      ],
+      [
+        0.012626118551450396,
+        0.04213330338248548,
+        0.27273131221477437
+      ],
+      [
+        0.023285024510777148,
+        0.018749823320475593,
+        -0.08021709405712038
+      ],
+      [
+        0.03438281539128009,
+        0.037492880123901215,
+        0.03297528281150909
+      ]
+    ]
+  },
+  "chart_residual_model": {
+    "ridge_alpha": 0.01,
+    "W_lab": [
+      [
+        0.07281278829580629,
+        4.135286534416688,
+        -0.8682951557256315
+      ],
+      [
+        -5.391083874919857,
+        -3.1963735499559456,
+        1.1806226064007637
+      ],
+      [
+        12.12141809998786,
+        -0.40827564180200515,
+        -3.799479653322074
+      ],
+      [
+        -6.868653838809003,
+        7.156243900141822,
+        -4.804791988398446
+      ],
+      [
+        9.753788273220342,
+        -8.932549255320263,
+        1.5622185189041753
+      ],
+      [
+        2.3610400857255684,
+        -1.4938360900642103,
+        1.7103348050747413
+      ],
+      [
+        -5.221553121552639,
+        1.7855336456055864,
+        0.26566552805835125
+      ]
+    ],
+    "mean_chart_residual_after_root": [
+      0.34729181360200584,
+      0.21128472177012,
+      -0.029733422615858596
+    ]
+  },
+  "local_background": {
+    "reference_bg_lab": [
+      84.71,
+      -1.14,
+      -3.64
+    ],
+    "global_bg_lab": [
+      84.71,
+      -1.14,
+      -3.64
+    ],
+    "available_bg_count": 128,
+    "bg_margin": 36,
+    "bg_bright_percentile": 70.0,
+    "bg_max_chroma": 18.0,
+    "bg_gains": [
+      0.75,
+      0.35,
+      0.9
+    ],
+    "bg_caps": [
+      8.0,
+      5.0,
+      10.0
+    ]
+  },
+  "best_candidate_for_diagnostic": {
+    "candidate": "bg0p25_res0p00_family",
+    "bg_strength": 0.25,
+    "residual_strength": 0.0,
+    "family_limit": true,
+    "eval_count": 128,
+    "before_mean_deltaE": 13.053173871504182,
+    "before_median_deltaE": 13.268285785312312,
+    "before_max_deltaE": 20.26109967258187,
+    "root_mean_deltaE": 11.419500449268156,
+    "root_median_deltaE": 10.889674302115264,
+    "root_max_deltaE": 17.986637060520458,
+    "final_mean_deltaE": 11.766757953672586,
+    "final_median_deltaE": 11.163329109118116,
+    "final_max_deltaE": 18.651082999554944,
+    "final_p95_deltaE": 17.00946108532535,
+    "harm_count": 53,
+    "harm_rate": 0.4140625,
+    "classification_acc": 0.0078125,
+    "low_conf_count": 86
+  },
+  "outputs": {
+    "root_corrected_photo": "dataset_runs\\run_005\\02_rootpoly2_corrected_photo.png",
+    "candidate_summary": "dataset_runs\\run_005\\candidate_summary.csv",
+    "best_target_results": "dataset_runs\\run_005\\best_target_results.csv",
+    "group_summary_best": "dataset_runs\\run_005\\group_summary_best.csv",
+    "selected_rois": "dataset_runs\\run_005\\selected_rois.json",
+    "chart_corners": "dataset_runs\\run_005\\chart_corners.json",
+    "overlay": "dataset_runs\\run_005\\04_best_overlay.png"
+  }
+}

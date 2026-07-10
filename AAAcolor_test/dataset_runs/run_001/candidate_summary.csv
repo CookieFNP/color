@@ -1,0 +1,2 @@
+﻿candidate,bg_strength,residual_strength,family_limit,eval_count,before_mean_deltaE,before_median_deltaE,before_max_deltaE,root_mean_deltaE,root_median_deltaE,root_max_deltaE,final_mean_deltaE,final_median_deltaE,final_max_deltaE,final_p95_deltaE,harm_count,harm_rate,classification_acc,low_conf_count
+bg0p25_res0p00_family,0.25,0.0,True,128,11.156120182693467,9.332090973456262,24.063864389169286,7.237011858844242,6.053047473316272,18.37056633532788,7.0878061017464296,5.684558129929281,18.58479246162446,14.720521224180324,10,0.078125,0.234375,97

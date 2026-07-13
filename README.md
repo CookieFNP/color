@@ -1,302 +1,381 @@
- 
-## 1. 概述
+# Color Recognition and Correction System
 
-本项目用于验证实拍图像中的胶块颜色校正效果。程序以实拍图中的标准色卡作为颜色校准依据，通过建立实拍色卡与标准色卡之间的颜色映射关系，对整张图像进行颜色校正；随后对 12 个目标胶块进行 ROI 框选、代表色提取、Lab 转换和 ΔE00 色差计算，并与数据库中的标准 Lab 值进行对比，输出校正前后颜色误差及验证结果。
- 
-1. 支持从实拍图中手动选取标准色卡四角，并进行透视矫正；
-2. 支持提取标准色卡与实拍色卡的 24 个色块 RGB 均值；
-3. 支持基于色卡数据拟合颜色校正模型；
-4. 支持将颜色校正模型应用到整张实拍图；
-5. 支持 12 个胶块样本的批量 ROI 框选；
-6. 支持胶块目标区域的主体分割、去高光/阴影和稳健取色；
-7. 内置 12 组数据库标准 Lab 值；
-8. 输出校正前 Lab、校正后 Lab、ΔE00 色差、分类结果、CSV 表格、JSON 报告和可视化结果图。
+本项目用于胶块颜色校正与颜色识别。目标是在手机拍摄、光照变化、背景反射和样品高光/阴影存在的情况下，对待测胶块进行颜色校正，并在 128 个标准颜色中输出最接近的颜色编号、名称、TopK 结果与置信度。
 
-## 2. 工程结构
+项目目前采用的主流程是：
 
 ```text
-color_correction_glue_demo_v3/
-├── main.py
-├── requirements.txt
-├── README.md
-├── input/
-├── output_real_correction/
-└── src/
-    ├── __init__.py
-    ├── calibration.py
-    ├── chart.py
-    ├── color_math.py
-    ├── glue_mask.py
-    ├── interaction.py
-    ├── reporting.py
-    ├── standards.py
-    └── workflow.py
-````
-
-各模块功能如下：
-
-```text
-main.py
+输入图片
+↓
+ColorChecker 色卡标定
+↓
+root polynomial regression 色彩校正
+↓
+ROI 稳健取色与局部背景补偿
+↓
+Lab residual 回归模型修正
+↓
+与 128 个标准 Lab 计算 ΔE2000
+↓
+输出 W001-W128 识别结果、TopK 与置信度
 ```
 
-程序入口，负责解析命令行参数并启动完整流程。
+## 当前功能
+
+- 支持手机实拍图片的颜色校正实验（数据采用iphone17）
+- 支持 ColorChecker 四角手动标定
+- 支持 root polynomial regression / ridge 参数实验
+- 支持 128 色标准 Lab 数据表
+- 支持整版 128 色胶块数据采集与评估
+- 支持局部背景 Lab 补偿
+- 支持 single residual model 修正 Lab 残差
+- 支持单个未知胶块识别
+- 输出 Top1 / Top2 / Top3 / TopK 识别结果
+- 输出 ΔE2000、置信度、overlay 可视化结果
+- 支持多张 run 结果汇总与 leave-one-run-out 验证
+
+## 项目状态
+
+本项目目前处于实验验证与工程化整理阶段。
+
+已经完成：
 
 ```text
-src/workflow.py
+传统色彩校正 baseline
+root_poly2 / ridge 参数实验
+128 色标准数据引入
+轻微背景补偿
+多张常态光数据采集
+Lab residual 回归模型训练
+单个胶块识别 demo
 ```
 
-主流程控制模块，负责串联图像读取、色卡校正、胶块 ROI 选择、代表色提取、色差计算和结果输出。
+当前推荐主线：
 
 ```text
-src/chart.py
+real_scene_rootpoly_pipeline_v2.py
+train_single_residual_model.py
+single_predict_v2.py
 ```
 
-色卡处理模块，负责实拍色卡透视矫正、标准色卡读取、24 个色块区域划分和色块 RGB 均值提取。
+历史实验脚本和输出目录保留用于对比，但不是最终推荐入口。
+
+## 主要文件说明
 
 ```text
-src/calibration.py
+data.csv
 ```
 
-颜色校正模块，负责根据实拍色卡与标准色卡之间的对应关系拟合颜色校正模型，并将模型应用于整张图像。
+128 个标准颜色的 Lab 数据表。
 
-```text
-src/color_math.py
+格式示例：
+
+```csv
+W001,大红,"44.5, 46.99, 19.2"
+W002,正红,"39.73, 39.58, 14.35"
+W003,中国红,"43.52, 53.88, 20.92"
 ```
-
-颜色空间转换与色差计算模块，包含 sRGB 与 linear RGB 转换、RGB 到 XYZ 转换、XYZ 到 Lab 转换，以及 ΔE00 色差计算。
-
-```text
-src/glue_mask.py
-```
-
-胶块目标区域处理模块，负责从 ROI 中分割胶块主体，剔除边缘、高光和阴影区域，并使用稳健均值计算胶块代表色。
-
-```text
-src/interaction.py
-```
-
-交互模块，负责手动点击色卡四角和手动框选胶块 ROI。
-
-```text
-src/standards.py
-```
-
-标准颜色数据库模块，内置 12 个胶块样本的标准 Lab 值，并支持根据编号或名称查询标准数据。
-
-```text
-src/reporting.py
-```
-
-结果输出模块，负责保存校正图像、对比图、mask 可视化图、CSV 结果表、JSON 报告和 ΔE00 统计图。
-
-## 3. 输入数据
-
-程序主要输入包括：
-
-```text
-real_photo_iqoo.jpg
-```
-
-实拍图像，图中应包含标准色卡和待验证胶块。
 
 ```text
 standard_chart.png
 ```
 
-标准色卡图像，用于提供标准色块颜色。
-
-内置的 12 个数据库标准 Lab 值如下：
-
-| 编号   | 名称  | 标准 Lab              |
-| ---- | --- | ------------------- |
-| W015 | 桔红  | 55.74, 43.62, 41.71 |
-| W016 | 橙红色 | 52.79, 33.02, 27.21 |
-| W031 | 淡雅黄 | 77.97, -2.16, 28.66 |
-| W032 | 柠檬黄 | 82.78, -5.38, 30.47 |
-| W047 | 浅棕桐 | 65.94, 0.97, 14.80  |
-| W048 | 灰米色 | 73.34, 3.62, 10.90  |
-| W063 | 木纹灰 | 75.47, -1.39, 4.54  |
-| W064 | 乌托银 | 58.72, -2.12, 0.87  |
-| W079 | 钛晶灰 | 41.96, 0.97, 2.06   |
-| W080 | 中行灰 | 50.81, 0.50, 0.62   |
-| W095 | 暗灰色 | 42.77, 1.65, -1.27  |
-| W096 | 慕云灰 | 76.90, -4.65, 11.02 |
-
-## 4. 运行方式
-
-安装依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-运行程序：
-
-```bash
-python main.py --photo real_photo_iqoo.jpg --standard standard_chart.png  
-```
-
-默认批量验证顺序为：
+标准 ColorChecker 图片，用于提取 24 色标准 RGB。
 
 ```text
-W015 -> W016 -> W031 -> W032 -> W047 -> W048 -> W063 -> W064 -> W079 -> W080 -> W095 -> W096
-```
- 
-
-## 5. 算法流程
-
-### 5.1 色卡区域透视矫正
-
-程序首先要求用户在实拍图中依次点击标准色卡的四个角点，顺序为：
-
-```text
-左上角 -> 右上角 -> 右下角 -> 左下角
+real_scene_rootpoly_pipeline_v2.py
 ```
 
-根据四个角点计算透视变换矩阵，将实拍图中的倾斜色卡矫正为标准矩形区域，便于后续按照固定网格提取色块颜色。
+整版 128 色样本处理脚本。用于从实拍整版图片中提取 128 个 ROI，进行 rootpoly2 校正、背景补偿、TopK 识别和结果统计。
 
-### 5.2 色卡色块采样
-
-标准色卡按 4 行 × 6 列划分，共 24 个色块。程序对实拍色卡和标准色卡分别提取 24 个色块的 RGB 均值。
-
-为减少边缘、阴影和色块边框的影响，每个色块不取完整区域，而是只取色块中心区域进行均值计算。色块顺序为从左到右、从上到下。
-
-### 5.3 sRGB 到 linear RGB 转换
-
-实拍图像中的 RGB 通常为 sRGB 编码，包含 gamma 非线性。为了更适合进行线性颜色映射，程序先将 sRGB 转换为 linear RGB，再进行颜色校正模型拟合。
-
-### 5.4 颜色校正模型拟合
-
-程序根据实拍色卡与标准色卡之间的对应关系，建立如下颜色映射：
+主要输出：
 
 ```text
-实拍色卡 RGB -> 标准色卡 RGB
-```
-
-当前版本支持的主要模型为带偏置项的线性颜色校正模型：
-
-```text
-[R_ref, G_ref, B_ref] ≈ [R_cap, G_cap, B_cap, 1] × W
-```
-
-其中：
-
-```text
-R_cap, G_cap, B_cap
-```
-
-表示实拍色卡色块的 linear RGB；
-
-```text
-R_ref, G_ref, B_ref
-```
-
-表示标准色卡色块的 linear RGB；
-
-```text
-W
-```
-
-表示通过最小二乘或带正则项的回归方法拟合得到的颜色校正参数。
-
-带偏置项的模型相比普通 3×3 矩阵能够更好地处理整体亮度偏移问题。
-
-### 5.5 整图颜色校正
-
-拟合得到颜色校正模型后，程序将该模型应用到整张实拍图像的每个像素上，得到校正后的图像。
-
-处理流程如下：
-
-```text
-原始图像 sRGB
--> linear RGB
--> 颜色校正模型
--> corrected linear RGB
--> sRGB
--> 校正后图像
-```
-
-### 5.6 胶块 ROI 框选
-
-在完成整图校正后，程序按照预设顺序依次提示用户框选 12 个胶块样本的 ROI。每个 ROI 应尽量只包含胶块主体区域，避免包含文字、背景、大面积阴影和强反光区域。
-
-### 5.7 胶块主体分割与稳健取色
-
-由于胶块为立体曲面物体，表面存在高光、阴影和明暗变化，不能直接对矩形 ROI 内所有像素求均值。当前版本采用以下流程提取胶块代表色：
-
-```text
-手动框选 ROI
--> GrabCut 前景分割
--> 形态学开闭运算清理 mask
--> 距离变换去除边缘区域
--> 基于 Lab/HSV 的亮度和饱和度筛选
--> 剔除高光和阴影区域
--> 对稳定区域像素进行 trimmed mean 计算
-```
-
-其中，trimmed mean 会去除各通道中过高和过低的像素值，相比直接平均更能降低高光、阴影和异常像素对结果的影响。
-
-### 5.8 Lab 转换与 ΔE00 色差计算
-
-程序将胶块校正前后的 RGB 代表色转换到 Lab 色彩空间，并与数据库标准 Lab 值计算 ΔE00 色差。
-
-Lab 色彩空间中：
-
-```text
-L 表示明度
-a 表示红绿方向
-b 表示黄蓝方向
-```
-
-ΔE00 用于衡量两个 Lab 颜色之间的感知色差。ΔE00 越小，表示实测颜色与标准颜色越接近。
-
-### 5.9 最近类别判断
-
-除计算当前样本与其对应标准值之间的 ΔE00 外，程序还会将实测 Lab 与数据库中全部 12 个标准 Lab 进行比较，找出距离最近的标准类别，并输出分类是否正确。
-
-## 6. 输出结果
-
-程序运行后，主要输出位于：
-
-```text
-output_real_correction/
-```
-
-主要文件包括：
-
-```text
-03_corrected_photo.png
-```
-
-整张实拍图的颜色校正结果。
-
-```text
-05_photo_before_after.png
-```
-
-整图校正前后对比图。
-
-```text
-11_target_validation.csv
-```
-
-12 个胶块样本的详细验证结果，包括标准 Lab、校正前 Lab、校正后 Lab、校正前后 ΔE00、最近分类结果等。
-
-```text
-12_target_validation_summary.png
-```
-
-12 个胶块样本校正前后 ΔE00 对比柱状图。
-
-```text
+best_target_results.csv
+candidate_summary.csv
+group_summary_best.csv
 report.json
+selected_rois.json
+chart_corners.json
 ```
-
-完整实验过程和结果记录。
 
 ```text
-targets/
+summarize_runs.py
 ```
 
-每个胶块的 mask 可视化图和局部校正前后对比图。
- 
+用于汇总多个 `dataset_runs/run_xxx` 的结果，生成整体统计、每个色号统计和每个色系分组统计。
+
+主要输出：
+
+```text
+summary_out/runs_summary.csv
+summary_out/code_summary.csv
+summary_out/group_summary_all_runs.csv
+summary_out/summary_report.txt
+```
+
+```text
+train_single_residual_model.py
+```
+
+训练适用于单个未知胶块识别的 Lab residual 回归模型。
+
+该模型不使用：
+
+```text
+idx
+row_norm
+col_norm
+code
+```
+
+因此不会依赖 128 色板的固定位置，适合迁移到单个未知胶块识别场景。
+
+模型输入包括：
+
+```text
+raw Lab
+rootpoly2 校正后 Lab
+背景补偿后 Lab
+局部背景 Lab
+chroma 色度
+hue 色相
+颜色族特征
+```
+
+模型输出：
+
+```text
+ΔL, Δa, Δb
+```
+
+即对当前测量 Lab 的残差补偿。
+
+```text
+single_predict_v2.py
+```
+
+单个未知胶块识别脚本。
+
+功能包括：
+
+```text
+ColorChecker 标定
+单个 ROI 框选
+ROI 高光/阴影剔除
+局部背景提取
+bg0.25 背景补偿
+single residual model 修正
+128 标准色 ΔE2000 最近邻识别
+TopK 输出与置信度判断
+```
+
+## 安装依赖
+
+建议使用 Python 3.10 或以上版本。
+
+```bash
+pip install numpy opencv-python scikit-image
+```
+
+如果后续训练分类模型，可额外安装：
+
+```bash
+pip install scikit-learn
+```
+
+如果使用 XGBoost：
+
+```bash
+pip install xgboost
+```
+
+## 整版 128 色样本处理
+
+示例命令：
+
+```powershell
+python real_scene_rootpoly_pipeline_v2.py `
+  --photo pic_all.jpg `
+  --standard-chart standard_chart.png `
+  --standards-csv data.csv `
+  --target-codes auto:1-128 `
+  --eval-count 128 `
+  --out dataset_runs/run_001 `
+  --background-lab "84.71,-1.14,-3.64" `
+  --bg-strength-list 0.25 `
+  --residual-strength-list 0 `
+  --bg-bright-percentile 70 `
+  --bg-max-chroma 18
+```
+
+每张新图片建议单独输出到一个 run 目录：
+
+```text
+dataset_runs/run_001
+dataset_runs/run_002
+dataset_runs/run_003
+...
+```
+
+## 汇总多个 run
+
+```powershell
+python summarize_runs.py `
+  --runs-glob "dataset_runs/run_*" `
+  --eval-count 128 `
+  --out summary_out
+```
+
+重点查看：
+
+```text
+summary_out/runs_summary.csv
+summary_out/code_summary.csv
+summary_out/group_summary_all_runs.csv
+summary_out/summary_report.txt
+```
+
+## 训练 single residual 模型
+
+clean 版本示例：
+
+```powershell
+python train_single_residual_model.py `
+  --runs "dataset_runs/run_001,dataset_runs/run_004,dataset_runs/run_006,dataset_runs/run_007,dataset_runs/run_008,dataset_runs/run_009,dataset_runs/run_010,dataset_runs/run_012,dataset_runs/run_013,dataset_runs/run_014" `
+  --standards-csv data.csv `
+  --baseline-file best_target_results.csv `
+  --eval-count 128 `
+  --background-lab "84.71,-1.14,-3.64" `
+  --out single_residual_model_out_clean
+```
+
+输出：
+
+```text
+single_residual_model_out_clean/alpha_sweep_summary.csv
+single_residual_model_out_clean/loo_predictions_best_alpha.csv
+single_residual_model_out_clean/train_predictions_full_model.csv
+single_residual_model_out_clean/single_residual_model.json
+```
+
+其中 `single_residual_model.json` 是单个胶块识别时使用的模型文件。
+
+## 单个未知胶块识别
+
+推荐使用 v2 版本：
+
+```powershell
+python single_predict_v2.py `
+  --photo single_test.jpg `
+  --standard-chart standard_chart.png `
+  --standards-csv data.csv `
+  --model single_residual_model_out_clean/single_residual_model.json `
+  --out single_predict_out
+```
+
+运行时需要：
+
+```text
+1. 点选 ColorChecker 四角
+2. 框选待测胶块 ROI
+```
+
+输出：
+
+```text
+single_predict_result.json
+single_predict_topk.csv
+single_predict_overlay.jpg
+target_crop_original.jpg
+target_crop_root_corrected.jpg
+chart_corners.json
+target_roi.json
+```
+
+如果是黄色、浅黄、金色等容易受高光影响的色块，可以尝试：
+
+```powershell
+python single_predict_v2.py `
+  --photo single_test_yellow.jpg `
+  --standard-chart standard_chart.png `
+  --standards-csv data.csv `
+  --model single_residual_model_out_clean/single_residual_model.json `
+  --out single_predict_yellow `
+  --use-family-filter `
+  --roi-center-ratio 0.65 `
+  --roi-trim-percent 12
+```
+
+## 识别结果说明
+
+单个识别结果会输出：
+
+```text
+Top1 编号与名称
+Top2 编号与名称
+Top3 编号与名称
+ΔE2000
+Top2 margin
+confidence
+```
+
+置信度规则：
+
+```text
+high      Top1 ΔE 较低，且 Top1 与 Top2 差距明显
+medium    Top1 较可信，但存在相近颜色
+low       Top1 可能正确，但需要结合 Top2/Top3 判断
+very_low  不建议自动判定，需要人工复核
+```
+
+对于红色、黄色、浅色、灰色等相近颜色，不建议只看 Top1，应结合 Top3 和置信度判断。
+
+## 当前实验结果
+
+在多张 128 色实拍样本上，使用 leave-one-run-out 验证 single residual model：
+
+```text
+before mean ΔE：约 15.93
+rootpoly2 + bg0.25 后 mean ΔE：约 9.90
+single residual model 后 mean ΔE：约 5.78
+model max ΔE：约 17.39
+model p95 ΔE：约 11.92
+```
+
+说明 residual 模型能够有效补偿 ColorChecker 全局校正后，在胶块区域仍然存在的系统误差。
+
+
+
+## 拍摄建议
+
+为了提高识别稳定性，建议：
+
+```text
+固定光源
+固定相机焦距
+尽量锁曝光和白平衡
+不要使用滤镜、夜景、人像、美化
+尽量保留原图，不要微信压缩
+图片中包含 ColorChecker
+背景材料尽量一致
+ROI 框选时避开明显高光和暗阴影
+```
+
+黄色、浅色和灰色对光照最敏感，需要特别注意高光和阴影。
+
+## 目录说明
+
+当前仓库中保留了大量实验输出目录，例如：
+
+```text
+output_rootpoly_stable
+output_known_bg_v2
+output_final_bg025
+output_pure_rootpoly2_all128
+single_predict_out
+single_residual_model_out_clean
+summary_out
+```
+
+此目录主要用于实验记录和效果对比。

@@ -1,0 +1,21 @@
+{
+  "n_samples": 1536,
+  "n_runs": 12,
+  "n_classes": 128,
+  "image_size": 224,
+  "crop_source": "original",
+  "split_map": {
+    "run_001": "train",
+    "run_002": "train",
+    "run_004": "train",
+    "run_005": "train",
+    "run_006": "train",
+    "run_007": "train",
+    "run_008": "train",
+    "run_009": "train",
+    "run_010": "train",
+    "run_012": "train",
+    "run_013": "train",
+    "run_014": "val"
+  }
+}

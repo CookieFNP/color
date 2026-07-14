@@ -1,0 +1,13 @@
+﻿run,split,n_samples,n_original,n_root
+run_001,train,128,128,0
+run_002,train,128,128,0
+run_004,train,128,128,0
+run_005,train,128,128,0
+run_006,train,128,128,0
+run_007,train,128,128,0
+run_008,train,128,128,0
+run_009,train,128,128,0
+run_010,train,128,128,0
+run_012,train,128,128,0
+run_013,train,128,128,0
+run_014,val,128,128,0

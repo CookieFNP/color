@@ -89,6 +89,203 @@ def lab_std_to_cv_delta(delta_lab: np.ndarray) -> tuple[float, float, float]:
     return dL * 255.0 / 100.0, da, db
 
 
+
+
+def code_to_number(code: str | None) -> int | None:
+    """W053 -> 53。解析失败返回 None。"""
+    if code is None:
+        return None
+    s = str(code).strip().upper()
+    if s.startswith("W") and s[1:].isdigit():
+        return int(s[1:])
+    digits = "".join(ch for ch in s if ch.isdigit())
+    return int(digits) if digits else None
+
+
+def clamp_signed_delta(value: float, pos_cap: float | None = None, neg_cap: float | None = None) -> float:
+    """
+    对 Lab 残差做限幅。
+    pos_cap 限制正向，例如 b 正向就是“变黄”的最大幅度。
+    neg_cap 限制负向，例如 b 负向就是“变蓝”的最大幅度。
+    """
+    v = float(value)
+    if pos_cap is not None and v > float(pos_cap):
+        v = float(pos_cap)
+    if neg_cap is not None and v < -float(neg_cap):
+        v = -float(neg_cap)
+    return v
+
+
+def visual_rule_for_code(
+    code: str | None,
+    *,
+    enable_rules: bool,
+    rule_strength: float,
+    default_l_original_mix: float,
+    default_b_scale: float,
+    default_b_pos_cap: float | None,
+    default_b_neg_cap: float | None,
+) -> dict:
+    """
+    视觉调参规则，不影响测色统计的 ROI/mask，只影响最终 preview 怎么渲染。
+
+    当前规则来自你对 128 色肉眼观察：
+    - W017-W032、W097-W112 大致像肉眼：尽量不动。
+    - W033-W048 偏浅偏黄：减少 b 正向残差，L 更多回原图。
+    - W049-W064 浅灰/灰白高风险，尤其 W053：强限制变黄，L 更多回原图。
+    - W081-W095、W113-W127 深色/棕咖偏浅：L 更多回原图。
+    """
+    strength = float(np.clip(rule_strength, 0.0, 1.0))
+    n = code_to_number(code)
+
+    # 默认规则：不启用系列规则时，由命令行统一控制。
+    base = {
+        "group": "default",
+        "l_original_mix": float(np.clip(default_l_original_mix, 0.0, 1.0)),
+        "b_scale": float(default_b_scale),
+        "b_pos_cap": default_b_pos_cap,
+        "b_neg_cap": default_b_neg_cap,
+    }
+
+    if not enable_rules or n is None:
+        return base
+
+    # 目标规则。后面会用 rule_strength 从 base 插值过去。
+    target = dict(base)
+
+    if 17 <= n <= 32:
+        target.update(group="W017-W032_keep", l_original_mix=0.0, b_scale=1.0, b_pos_cap=None, b_neg_cap=None)
+
+    elif 33 <= n <= 48:
+        target.update(group="W033-W048_less_yellow_less_light", l_original_mix=0.65, b_scale=0.45, b_pos_cap=1.50, b_neg_cap=3.00)
+
+    elif 49 <= n <= 64:
+        target.update(group="W049-W064_gray_white_protect", l_original_mix=0.75, b_scale=0.25, b_pos_cap=0.80, b_neg_cap=2.00)
+
+    elif 65 <= n <= 80:
+        target.update(group="W065-W080_mid_gray_soft", l_original_mix=0.50, b_scale=0.50, b_pos_cap=1.20, b_neg_cap=2.50)
+
+    elif 81 <= n <= 95:
+        target.update(group="W081-W095_deep_gray_keep_L", l_original_mix=0.85, b_scale=0.60, b_pos_cap=1.20, b_neg_cap=2.50)
+
+    elif n == 96:
+        target.update(group="W096_keep", l_original_mix=0.0, b_scale=1.0, b_pos_cap=None, b_neg_cap=None)
+
+    elif 97 <= n <= 112:
+        target.update(group="W097-W112_keep", l_original_mix=0.0, b_scale=1.0, b_pos_cap=None, b_neg_cap=None)
+
+    elif 113 <= n <= 127:
+        target.update(group="W113-W127_brown_keep_L", l_original_mix=0.75, b_scale=0.60, b_pos_cap=1.80, b_neg_cap=3.00)
+
+    elif n == 128:
+        target.update(group="W128_keep", l_original_mix=0.0, b_scale=1.0, b_pos_cap=None, b_neg_cap=None)
+
+    # W053 单独强保护：你看到的“非常暖的白色”就是这里最该压住。
+    if n == 53:
+        target.update(group="W053_special_warm_white_protect", l_original_mix=0.90, b_scale=0.10, b_pos_cap=0.40, b_neg_cap=1.50)
+
+    def interp_float(a, b):
+        return float(a) * (1.0 - strength) + float(b) * strength
+
+    out = dict(base)
+    out["group"] = target["group"]
+    out["l_original_mix"] = interp_float(base["l_original_mix"], target["l_original_mix"])
+    out["b_scale"] = interp_float(base["b_scale"], target["b_scale"])
+
+    # cap 的插值比较麻烦：如果 base 没 cap，则直接用 target cap；这样规则一开就能保护异常点。
+    out["b_pos_cap"] = target["b_pos_cap"] if target["b_pos_cap"] is not None else base["b_pos_cap"]
+    out["b_neg_cap"] = target["b_neg_cap"] if target["b_neg_cap"] is not None else base["b_neg_cap"]
+    return out
+
+
+def effective_lab_delta_for_target(
+    target: dict,
+    *,
+    alpha: float,
+    ab_scale: float,
+    l_scale: float,
+    enable_rules: bool,
+    rule_strength: float,
+    default_l_original_mix: float,
+    default_b_scale: float,
+    default_b_pos_cap: float | None,
+    default_b_neg_cap: float | None,
+) -> tuple[float, float, float, dict]:
+    """返回用于视觉渲染的有效 Lab 残差 dL, da, db，以及该色号使用的规则。"""
+    dL, da, db = map(float, target["residual_lab"])
+    rule = visual_rule_for_code(
+        target.get("code"),
+        enable_rules=enable_rules,
+        rule_strength=rule_strength,
+        default_l_original_mix=default_l_original_mix,
+        default_b_scale=default_b_scale,
+        default_b_pos_cap=default_b_pos_cap,
+        default_b_neg_cap=default_b_neg_cap,
+    )
+
+    eff_dL = dL * float(alpha) * float(l_scale)
+    eff_da = da * float(alpha) * float(ab_scale)
+
+    # b 单独按色系缩放和限幅，防止“过黄”。
+    eff_db = db * float(alpha) * float(ab_scale) * float(rule["b_scale"])
+    eff_db = clamp_signed_delta(eff_db, pos_cap=rule["b_pos_cap"], neg_cap=rule["b_neg_cap"])
+    return eff_dL, eff_da, eff_db, rule
+
+
+def save_visual_rules_csv(
+    path: Path,
+    fixed_targets: list[dict],
+    *,
+    alpha: float,
+    ab_scale: float,
+    l_scale: float,
+    enable_rules: bool,
+    rule_strength: float,
+    default_l_original_mix: float,
+    default_b_scale: float,
+    default_b_pos_cap: float | None,
+    default_b_neg_cap: float | None,
+) -> None:
+    """保存每个 W 色号实际吃到的视觉规则，方便你查 W053 / W033-W064。"""
+    rows = []
+    for t in fixed_targets:
+        raw_dL, raw_da, raw_db = map(float, t["residual_lab"])
+        eff_dL, eff_da, eff_db, rule = effective_lab_delta_for_target(
+            t,
+            alpha=alpha,
+            ab_scale=ab_scale,
+            l_scale=l_scale,
+            enable_rules=enable_rules,
+            rule_strength=rule_strength,
+            default_l_original_mix=default_l_original_mix,
+            default_b_scale=default_b_scale,
+            default_b_pos_cap=default_b_pos_cap,
+            default_b_neg_cap=default_b_neg_cap,
+        )
+        rows.append({
+            "index": t.get("index"),
+            "code": t.get("code"),
+            "name": t.get("name"),
+            "group": rule["group"],
+            "raw_residual_L": raw_dL,
+            "raw_residual_a": raw_da,
+            "raw_residual_b": raw_db,
+            "effective_delta_L": eff_dL,
+            "effective_delta_a": eff_da,
+            "effective_delta_b": eff_db,
+            "l_original_mix": rule["l_original_mix"],
+            "b_scale": rule["b_scale"],
+            "b_pos_cap": rule["b_pos_cap"],
+            "b_neg_cap": rule["b_neg_cap"],
+        })
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8-sig") as f:
+        fieldnames = list(rows[0].keys()) if rows else []
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
 def feather_mask(mask: np.ndarray, feather: int) -> np.ndarray:
     m = mask.astype(np.float32)
 
@@ -704,6 +901,7 @@ def load_visual_rois_json(
 
 def apply_residual_to_corrected(
     *,
+    original_bgr: np.ndarray,
     corrected_bgr: np.ndarray,
     fixed_targets: list[dict],
     alpha: float,
@@ -714,21 +912,23 @@ def apply_residual_to_corrected(
     target_colors: list[dict],
     bg_min_L: float,
     bg_max_saturation: float,
+    use_visual_series_rules: bool,
+    rule_strength: float,
+    glue_l_original_mix: float,
+    default_b_scale: float,
+    b_pos_cap: float | None,
+    b_neg_cap: float | None,
 ) -> np.ndarray:
     """
-    在 corrected 图上叠加 residual。
+    在 corrected 图上叠加 residual，但加入两类视觉保护：
 
-    关键公式：
+    1. b 通道按色系缩放/限幅，防止 W033-W064、W053 等过黄。
+    2. 胶块 L 通道可按色系混回 original 图，防止深色/灰白被 corrected 图提得过浅。
 
-        preview = corrected + mask * alpha * residual
-
-    其中 residual 是：
-        standard_lab - corrected_measured_lab
-
-    而不是：
-        standard_lab - original_lab
+    注意：这只影响 preview 图，不改变测色 ROI，也不改变 report.json。
     """
     lab = cv2.cvtColor(corrected_bgr, cv2.COLOR_BGR2LAB).astype(np.float32)
+    original_lab = cv2.cvtColor(original_bgr, cv2.COLOR_BGR2LAB).astype(np.float32)
 
     if bg_alpha > 0:
         bg_mask = build_background_mask(
@@ -741,30 +941,53 @@ def apply_residual_to_corrected(
         lab[:, :, 1] = lab[:, :, 1] + bg_mask * bg_alpha * (128.0 - lab[:, :, 1])
         lab[:, :, 2] = lab[:, :, 2] + bg_mask * bg_alpha * (128.0 - lab[:, :, 2])
 
-    alpha_ab = float(alpha) * float(ab_scale)
-    alpha_L = float(alpha) * float(l_scale)
-
     for target in fixed_targets:
         x1, y1, x2, y2 = target.get("visual_roi_xyxy", target["roi_xyxy"])
 
         crop = lab[y1:y2, x1:x2]
+        orig_crop = original_lab[y1:y2, x1:x2]
 
-        dL_cv, da_cv, db_cv = lab_std_to_cv_delta(target["residual_lab"])
+        eff_dL, eff_da, eff_db, rule = effective_lab_delta_for_target(
+            target,
+            alpha=float(alpha),
+            ab_scale=float(ab_scale),
+            l_scale=float(l_scale),
+            enable_rules=bool(use_visual_series_rules),
+            rule_strength=float(rule_strength),
+            default_l_original_mix=float(glue_l_original_mix),
+            default_b_scale=float(default_b_scale),
+            default_b_pos_cap=b_pos_cap,
+            default_b_neg_cap=b_neg_cap,
+        )
+
+        # 标准 Lab L 残差要换算到 OpenCV Lab 的 0~255 尺度；a/b 残差不用加 128，因为这是“差值”。
+        dL_cv = eff_dL * 255.0 / 100.0
+        da_cv = eff_da
+        db_cv = eff_db
 
         m = target["visual_mask"].astype(np.float32)
+        if m.max() > 1:
+            m = m / 255.0
 
         if protect_extreme_light:
             m = m * protect_light_weight(crop)
 
-        crop[:, :, 0] = crop[:, :, 0] + m * alpha_L * dL_cv
-        crop[:, :, 1] = crop[:, :, 1] + m * alpha_ab * da_cv
-        crop[:, :, 2] = crop[:, :, 2] + m * alpha_ab * db_cv
+        # 先做残差修正。
+        crop[:, :, 0] = crop[:, :, 0] + m * dL_cv
+        crop[:, :, 1] = crop[:, :, 1] + m * da_cv
+        crop[:, :, 2] = crop[:, :, 2] + m * db_cv
+
+        # 再把 L 通道按规则混回原图，解决“深色/灰白被校得过浅”。
+        # mix=0: L 保持 corrected/residual；mix=1: L 完全用 original。
+        l_mix = float(np.clip(rule["l_original_mix"], 0.0, 1.0))
+        if l_mix > 0:
+            wm = m * l_mix
+            crop[:, :, 0] = crop[:, :, 0] * (1.0 - wm) + orig_crop[:, :, 0] * wm
 
         lab[y1:y2, x1:x2] = crop
 
     lab = np.clip(lab, 0, 255).astype(np.uint8)
     return cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
-
 
 def evaluate_candidate(
     candidate_bgr: np.ndarray,
@@ -1187,6 +1410,48 @@ def main() -> None:
         help="保存/复用手动画圆结果的 json 文件。默认保存在输出目录 visual_circles_manual.json",
     )
 
+
+    parser.add_argument(
+        "--use-visual-series-rules",
+        action="store_true",
+        help="启用按 W 编号/色系的视觉保护规则：限制 W033-W064 过黄、深色过浅、W053 暖白异常。",
+    )
+
+    parser.add_argument(
+        "--rule-strength",
+        type=float,
+        default=1.0,
+        help="视觉规则强度，0=不用规则，1=完整规则。建议先试 0.7 或 1.0。",
+    )
+
+    parser.add_argument(
+        "--glue-l-original-mix",
+        type=float,
+        default=0.0,
+        help="全局胶块 L 通道回原图比例。0=用 corrected L，1=用 original L。启用色系规则时各组会自动覆盖/插值。",
+    )
+
+    parser.add_argument(
+        "--b-scale",
+        type=float,
+        default=1.0,
+        help="全局 b 残差倍率。小于 1 会整体减少变黄/变蓝幅度。",
+    )
+
+    parser.add_argument(
+        "--b-pos-cap",
+        type=float,
+        default=None,
+        help="全局限制 b 正向残差，即最多变黄多少 Lab b。例：--b-pos-cap 2。",
+    )
+
+    parser.add_argument(
+        "--b-neg-cap",
+        type=float,
+        default=None,
+        help="全局限制 b 负向残差，即最多变蓝多少 Lab b。例：--b-neg-cap 3。",
+    )
+
     args = parser.parse_args()
 
     report_path = Path(args.report)
@@ -1246,9 +1511,11 @@ def main() -> None:
         feather=args.feather,
     )
     visual_roi_file = Path(args.visual_roi_file) if args.visual_roi_file else (out_dir / "visual_rois_manual.json")
-
     visual_circle_file = Path(args.visual_circle_file) if args.visual_circle_file else (out_dir / "visual_circles_manual.json")
 
+    # 重要：visual circle 和 visual ROI 只能二选一。
+    # 之前的 bug 是：先加载/保存了手动画圆，后面又自动加载 visual_rois_manual.json，
+    # 于是圆形 mask 被旧的方框 ROI 覆盖，最终看起来仍然是大方框渲染。
     if args.manual_visual_circle:
         fixed_targets = select_visual_circles_interactively(
             preview_bgr=original_bgr,
@@ -1257,15 +1524,7 @@ def main() -> None:
         )
         save_visual_circles_json(visual_circle_file, fixed_targets)
         print("已保存手动画圆结果：", visual_circle_file)
-
-    elif visual_circle_file.exists():
-        fixed_targets = load_visual_circles_json(
-            visual_circle_file,
-            fixed_targets=fixed_targets,
-            preview_shape=original_bgr.shape,
-            feather=args.feather,
-        )
-        print("已加载已有画圆结果：", visual_circle_file)
+        print("当前视觉区域模式：manual_circle_saved")
 
     elif args.manual_visual_roi:
         fixed_targets = select_visual_rois_interactively(
@@ -1276,6 +1535,17 @@ def main() -> None:
         )
         save_visual_rois_json(visual_roi_file, fixed_targets)
         print("已保存手动 visual ROI：", visual_roi_file)
+        print("当前视觉区域模式：manual_roi_saved")
+
+    elif visual_circle_file.exists():
+        fixed_targets = load_visual_circles_json(
+            visual_circle_file,
+            fixed_targets=fixed_targets,
+            preview_shape=original_bgr.shape,
+            feather=args.feather,
+        )
+        print("已加载已有画圆结果：", visual_circle_file)
+        print("当前视觉区域模式：manual_circle_loaded")
 
     elif visual_roi_file.exists():
         fixed_targets = load_visual_rois_json(
@@ -1285,6 +1555,11 @@ def main() -> None:
             feather=args.feather,
         )
         print("已加载已有 visual ROI：", visual_roi_file)
+        print("当前视觉区域模式：manual_roi_loaded")
+
+    else:
+        print("未找到手动画圆/ROI文件，使用默认自动圆形视觉区域。")
+        print("当前视觉区域模式：default_auto_circle")
     if not fixed_targets:
         raise RuntimeError("没有有效 fixed_targets。")
 
@@ -1294,6 +1569,12 @@ def main() -> None:
 
     print(f"\n开始 sweep alpha，共 {len(alpha_list)} 个：{alpha_list}")
     print(f"ab_scale={args.ab_scale}, l_scale={args.l_scale}, bg_scale={args.bg_scale}")
+    print(
+        f"visual_series_rules={args.use_visual_series_rules}, "
+        f"rule_strength={args.rule_strength}, "
+        f"glue_l_original_mix={args.glue_l_original_mix}, "
+        f"b_scale={args.b_scale}, b_pos_cap={args.b_pos_cap}, b_neg_cap={args.b_neg_cap}"
+    )
 
     summary_rows: list[dict] = []
     sheet_images: list[np.ndarray] = []
@@ -1303,6 +1584,7 @@ def main() -> None:
         bg_alpha = float(alpha) * float(args.bg_scale)
 
         glue_candidate = apply_residual_to_corrected(
+            original_bgr=original_bgr,
             corrected_bgr=corrected_bgr,
             fixed_targets=fixed_targets,
             alpha=float(alpha),
@@ -1313,6 +1595,12 @@ def main() -> None:
             target_colors=target_colors,
             bg_min_L=args.bg_min_L,
             bg_max_saturation=args.bg_max_saturation,
+            use_visual_series_rules=args.use_visual_series_rules,
+            rule_strength=args.rule_strength,
+            glue_l_original_mix=args.glue_l_original_mix,
+            default_b_scale=args.b_scale,
+            b_pos_cap=args.b_pos_cap,
+            b_neg_cap=args.b_neg_cap,
         )
 
         candidate = composite_with_original_background(
@@ -1335,6 +1623,21 @@ def main() -> None:
 
         per_target_csv = out_dir / f"targets_alpha_{alpha:.2f}.csv"
         save_per_target_csv(per_target_csv, rows)
+
+        rules_csv = out_dir / f"visual_rules_alpha_{alpha:.2f}.csv"
+        save_visual_rules_csv(
+            rules_csv,
+            fixed_targets,
+            alpha=float(alpha),
+            ab_scale=args.ab_scale,
+            l_scale=args.l_scale,
+            enable_rules=args.use_visual_series_rules,
+            rule_strength=args.rule_strength,
+            default_l_original_mix=args.glue_l_original_mix,
+            default_b_scale=args.b_scale,
+            default_b_pos_cap=args.b_pos_cap,
+            default_b_neg_cap=args.b_neg_cap,
+        )
 
         summary_row = {
             "alpha": float(alpha),
@@ -1405,6 +1708,12 @@ def main() -> None:
             "feather": args.feather,
             "protect_extreme_light": args.protect_extreme_light,
             "trim_percent": args.trim_percent,
+            "use_visual_series_rules": args.use_visual_series_rules,
+            "rule_strength": args.rule_strength,
+            "glue_l_original_mix": args.glue_l_original_mix,
+            "b_scale": args.b_scale,
+            "b_pos_cap": args.b_pos_cap,
+            "b_neg_cap": args.b_neg_cap,
         },
         "summary_rows": summary_rows,
         "recommended_by_metrics": sorted_by_mean[:5],

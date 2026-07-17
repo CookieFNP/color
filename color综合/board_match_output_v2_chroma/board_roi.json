@@ -1,9 +1,0 @@
-{
-  "roi_xyxy": [
-    847,
-    814,
-    1261,
-    1290
-  ],
-  "note": "board ROI selected on original/corrected image coordinates"
-}

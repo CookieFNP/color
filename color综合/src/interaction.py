@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 
-def resize_for_display(img_bgr: np.ndarray, max_w: int = 1300, max_h: int = 850) -> tuple[np.ndarray, float]:
+def resize_for_display(img_bgr: np.ndarray, max_w: int = 2800, max_h: int = 1800) -> tuple[np.ndarray, float]:
     h, w = img_bgr.shape[:2]
     scale = min(max_w / w, max_h / h, 1.0)
     resized = cv2.resize(img_bgr, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)

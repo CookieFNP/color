@@ -1,0 +1,295 @@
+{
+  "input": {
+    "photo": "board.jpg",
+    "standard": "standard_chart.png",
+    "library": "output_128\\glue_visual_library\\glue_visual_library.csv",
+    "mapping": "output_128\\glue_visual_library\\visual_mapping_T_poly2\\visual_mapping_T.json"
+  },
+  "colorchecker_model": {
+    "model_type": "root_poly2",
+    "ridge_alpha": 1e-06,
+    "correction_strength": 1.0,
+    "chart_deltaE": {
+      "before": {
+        "mean": 9.442324931190837,
+        "median": 9.796047314482237,
+        "max": 13.329363137148087,
+        "p95": 12.674259906185428
+      },
+      "after": {
+        "mean": 3.008524261674058,
+        "median": 2.169783197619398,
+        "max": 9.122850875497392,
+        "p95": 6.117203895443715
+      },
+      "before_deltaE": [
+        10.997962272324454,
+        10.010713749056633,
+        11.944750959294288,
+        10.682760927278654,
+        9.873078670911912,
+        6.264224314794423,
+        11.528795111181747,
+        8.753761163193412,
+        10.060250054669588,
+        12.074568195192892,
+        9.150866376079211,
+        9.719015958052564,
+        9.537629586590004,
+        11.283748874098068,
+        7.22898120670061,
+        5.791332127442471,
+        7.176077655316234,
+        8.134052239882426,
+        5.873074229197196,
+        4.762329039289679,
+        7.893867019490441,
+        13.329363137148087,
+        12.780087855184112,
+        11.76450762621098
+      ],
+      "after_deltaE": [
+        5.105742546749888,
+        3.662616704205914,
+        3.0471163261886685,
+        5.076073041184791,
+        2.5682941745397008,
+        1.5705517683480064,
+        1.7122339657694683,
+        2.1218811248267864,
+        1.743961569643726,
+        9.122850875497392,
+        1.9948837467321767,
+        1.9424923657074786,
+        5.610418289740974,
+        2.217685270412009,
+        6.1870846347325426,
+        1.3409383852581602,
+        0.7825772019635985,
+        3.340953565944382,
+        1.4356060181345685,
+        1.2073437757666485,
+        1.4032413433594824,
+        3.0079180232713916,
+        0.28090452272594146,
+        5.721213039473695
+      ]
+    }
+  },
+  "board": {
+    "roi_xyxy": [
+      4046,
+      209,
+      4465,
+      505
+    ],
+    "corrected_rgb": [
+      217.99451907465433,
+      220.38644660234334,
+      211.84661682127012
+    ],
+    "corrected_lab": [
+      87.5043579557273,
+      -2.329651844437286,
+      3.9044227590184333
+    ],
+    "visual_lab": [
+      87.5043579557273,
+      -1.7350149795132999,
+      9.27392315939515
+    ],
+    "visual_rgb": [
+      224.0,
+      220.0,
+      202.0
+    ],
+    "display_lab": [
+      92.5043579557273,
+      -1.3482642305376347,
+      11.31022700142539
+    ],
+    "display_rgb": [
+      240.0,
+      233.0,
+      212.0
+    ],
+    "display_adjust": {
+      "l_offset": 5.0,
+      "chroma_scale": 0.95,
+      "chroma_offset": 0.0,
+      "a_offset": 0.3,
+      "b_offset": 2.5,
+      "chroma_max": 80.0
+    }
+  },
+  "mapping_info": {
+    "version": "visual_mapping_T_custom",
+    "feature_mode": "poly2",
+    "L_mode": "identity",
+    "ridge_alpha": 1e-06
+  },
+  "topk": [
+    {
+      "code": "W102",
+      "name": "哑白",
+      "deltaE_match": 1.7992000762036318,
+      "visual_display_L": 85.62726113658015,
+      "visual_display_a": -1.6952076684824124,
+      "visual_display_b": 11.17879445232286,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W102_哑白.png",
+      "machine_L": "89.17",
+      "machine_a": "-1.43",
+      "machine_b": "12.08",
+      "standard_L": "89.17",
+      "standard_a": "-1.43",
+      "standard_b": "12.08",
+      "rank": 1
+    },
+    {
+      "code": "W100",
+      "name": "爵士白",
+      "deltaE_match": 2.5987619066938494,
+      "visual_display_L": 83.67487169555967,
+      "visual_display_a": -2.2186052313062365,
+      "visual_display_b": 9.85077762241362,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W100_爵士白.png",
+      "machine_L": "91.72",
+      "machine_a": "-1.45",
+      "machine_b": "10.39",
+      "standard_L": "91.72",
+      "standard_a": "-1.45",
+      "standard_b": "10.39",
+      "rank": 2
+    },
+    {
+      "code": "W099",
+      "name": "浅灰白",
+      "deltaE_match": 2.6483771539430987,
+      "visual_display_L": 85.4979777476182,
+      "visual_display_a": -1.3153318474383169,
+      "visual_display_b": 12.492847777255122,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W099_浅灰白.png",
+      "machine_L": "83.97",
+      "machine_a": "-0.97",
+      "machine_b": "13.52",
+      "standard_L": "83.97",
+      "standard_a": "-0.97",
+      "standard_b": "13.52",
+      "rank": 3
+    },
+    {
+      "code": "W103",
+      "name": "浅米白",
+      "deltaE_match": 4.559850805019397,
+      "visual_display_L": 83.07122953876193,
+      "visual_display_a": -0.36091574219010436,
+      "visual_display_b": 13.612236394645771,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W103_浅米白.png",
+      "machine_L": "89.39",
+      "machine_a": "-0.3",
+      "machine_b": "15.06",
+      "standard_L": "89.39",
+      "standard_a": "-0.3",
+      "standard_b": "15.06",
+      "rank": 4
+    },
+    {
+      "code": "W098",
+      "name": "星光白",
+      "deltaE_match": 4.651777980197422,
+      "visual_display_L": 85.36603765863202,
+      "visual_display_a": -0.7226336976547953,
+      "visual_display_b": 3.689077451460898,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W098_星光白.png",
+      "machine_L": "83.58",
+      "machine_a": "0.04",
+      "machine_b": "3.94",
+      "standard_L": "83.58",
+      "standard_a": "0.04",
+      "standard_b": "3.94",
+      "rank": 5
+    },
+    {
+      "code": "W106",
+      "name": "浅象牙黄",
+      "deltaE_match": 4.75353096865407,
+      "visual_display_L": 87.33241860760857,
+      "visual_display_a": -1.9918168863899965,
+      "visual_display_b": 16.774891723028574,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W106_浅象牙黄.png",
+      "machine_L": "88.61",
+      "machine_a": "-0.94",
+      "machine_b": "18.01",
+      "standard_L": "88.61",
+      "standard_a": "-0.94",
+      "standard_b": "18.01",
+      "rank": 6
+    },
+    {
+      "code": "W107",
+      "name": "淡米黄",
+      "deltaE_match": 5.125775902364964,
+      "visual_display_L": 86.50563472890808,
+      "visual_display_a": -3.437171457988497,
+      "visual_display_b": 17.118481980683796,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W107_淡米黄.png",
+      "machine_L": "81.03",
+      "machine_a": "-2.59",
+      "machine_b": "17.51",
+      "standard_L": "81.03",
+      "standard_a": "-2.59",
+      "standard_b": "17.51",
+      "rank": 7
+    },
+    {
+      "code": "W109",
+      "name": "米黄",
+      "deltaE_match": 6.731818890982477,
+      "visual_display_L": 86.2937369777445,
+      "visual_display_a": -1.8485193322348437,
+      "visual_display_b": 20.32347543840092,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W109_米黄.png",
+      "machine_L": "78.87",
+      "machine_a": "-0.71",
+      "machine_b": "19.95",
+      "standard_L": "78.87",
+      "standard_a": "-0.71",
+      "standard_b": "19.95",
+      "rank": 8
+    },
+    {
+      "code": "W097",
+      "name": "象牙白",
+      "deltaE_match": 6.766159414725485,
+      "visual_display_L": 85.22074473971495,
+      "visual_display_a": -2.4037783615079578,
+      "visual_display_b": 20.226755787634907,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W097_象牙白.png",
+      "machine_L": "87.44",
+      "machine_a": "-1.69",
+      "machine_b": "20.47",
+      "standard_L": "87.44",
+      "standard_a": "-1.69",
+      "standard_b": "20.47",
+      "rank": 9
+    },
+    {
+      "code": "W101",
+      "name": "米色",
+      "deltaE_match": 6.926977807005879,
+      "visual_display_L": 79.26360752764981,
+      "visual_display_a": 1.201569891129406,
+      "visual_display_b": 7.569337990188862,
+      "visual_crop_path": "output_128/glue_visual_library/visual_crops/W101_米色.png",
+      "machine_L": "80.46",
+      "machine_a": "1.15",
+      "machine_b": "8.0",
+      "standard_L": "80.46",
+      "standard_a": "1.15",
+      "standard_b": "8.0",
+      "rank": 10
+    }
+  ],
+  "display_variants": [],
+  "note": "匹配误差 deltaE_match = ΔE(board_visual_lab, glue_visual_display_lab)。display_variants 只用于展示，不参与 TopK 排序。"
+}

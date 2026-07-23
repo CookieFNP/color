@@ -1,0 +1,38 @@
+ python render_zhengwei2_final_tweak.py `
+>>   --preview output_zhengwei2\corrected_residual_alpha_sweep\preview_alpha_1.00.png `
+>>   --targets-csv output_zhengwei2\corrected_residual_alpha_sweep\targets_alpha_1.00.csv `
+>>   --circle-file output_zhengwei2\corrected_residual_alpha_sweep\visual_circles_manual.json `
+>>   --out output_zhengwei2\corrected_residual_alpha_sweep\preview_alpha_1.00_final_tweak.png `
+>>   --global-l-offset -7.0 `
+>>   --global-a-offset 0.8 `
+>>   --global-chroma-scale 1.2
+对于W151 W152 W153 W154 W155 W203 W204 W217 W218 W219 W220 W221
+T07 T08 T09 T10 T114 （深棕
+
+
+
+>   --global-l-offset -1.2 `
+>>   --global-a-offset 0.8 `
+>>   --global-chroma-scale 1.0
+=== Done ===
+对于W157 W158 W159 W173 W174 W175 W176 W166 W167 W178 W179 W180 W181 W182 W196 W197 W198 W199 W200 W201 W202 W206 W207 W208 W209 W210 W212 W213 W214 W215 W216 W225 W226 W227 T系列剩下全部
+
+>>   --global-l-offset 11.8 `
+>>   --global-a-offset 0.8 `
+>>   --global-chroma-scale 0.9
+对于W129 W130 W131 W132 W160 
+
+>>   --global-l-offset -4.0 `
+>>   --global-a-offset 2.8 ` 
+>>   --global-chroma-scale 1.1
+对于W168 W169 W170 W171 W172 W173 W174 W175 W176 蓝色系
+
+>>   --global-l-offset -1.0 `
+>>   --global-a-offset 0.8 `
+>>   --global-chroma-scale 0.9
+W183 W184 W185 W186 W201 W202 W203 W204 W205 W216 W217 W218 W219 W220
+
+>>   --global-l-offset 6.0 `
+>>   --global-a-offset 0.8 `
+>>   --global-chroma-scale 0.9
+W187 W189 W190 W191 W192 W206

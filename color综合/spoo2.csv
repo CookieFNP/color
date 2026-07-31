@@ -1,0 +1,6 @@
+codes,L_offset,a_offset,b_offset,chroma_scale,alpha,remark
+sample_009,1,-1,0,0.6,0.8,蓝色降鲜
+sample_026,3,0,0,0.8,0,白色变白
+sample_046,-0.3,-1,0,0.8,0.8,白色变白
+sample_060,0,0,0,0.8,0.8,降低饱和
+sample_067,5,-3,15,0.8,0.8,黄色加黄

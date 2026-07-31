@@ -1,0 +1,4 @@
+codes,L_offset,a_offset,b_offset,chroma_scale,alpha,remark
+sample_018 sample_019 sample_022 sample_036,0,-1.3,0,0.6,0.8,红色降红
+sample_082,2,-1,0.5,0.6,0.8,红色降红
+sample_030,0,0,0,0.8,0.8,绿色降绿
